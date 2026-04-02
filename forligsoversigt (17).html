@@ -1,0 +1,1878 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Politiske Forlig – Oversigt pr. 1. oktober 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#f7f5f2; --bg2:#fff; --bg3:#eeebe6;
+  --navy:#0f1e33; --navy2:#1e3352;
+  --red:#b82c1e; --red-light:#f9e9e7; --red-mid:#e8c4bf;
+  --gold:#8a6200; --gold-bg:#fdf3dc;
+  --slate:#5a6a7e; --slate-light:#a0adb8;
+  --border:#ddd9d3; --border-dark:#c8c3bc;
+  --text:#1a1a1a; --text2:#3d3d3d;
+  --shadow:rgba(15,30,51,.08);
+  /* status colours */
+  --s-aktiv:#166534; --s-aktiv-bg:#dcfce7; --s-aktiv-border:#bbf7d0;
+  --s-udlober:#92400e; --s-udlober-bg:#fef3c7; --s-udlober-border:#fde68a;
+  --s-udloebet:#374151; --s-udloebet-bg:#f3f4f6; --s-udloebet-border:#d1d5db;
+  --s-opsagt:#7f1d1d; --s-opsagt-bg:#fee2e2; --s-opsagt-border:#fecaca;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'IBM Plex Sans',sans-serif;min-height:100vh;}
+
+/* HEADER */
+header{background:var(--bg2);border-bottom:1px solid var(--border);padding:24px 48px 20px;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;position:sticky;top:0;z-index:200;box-shadow:0 2px 12px var(--shadow);}
+.header-title .red-line{width:32px;height:3px;background:var(--red);border-radius:2px;margin-bottom:9px;}
+.header-title h1{font-family:'Lora',serif;font-size:clamp(17px,2vw,24px);font-weight:600;color:var(--navy);letter-spacing:-.3px;}
+.header-title p{margin-top:4px;font-size:11px;color:var(--slate);font-weight:300;}
+.kpis{display:flex;gap:1px;border:1px solid var(--border);border-radius:6px;overflow:hidden;flex-shrink:0;}
+.kpi{background:var(--bg2);padding:10px 18px;text-align:center;border-right:1px solid var(--border);}
+.kpi:last-child{border-right:none;}
+.kpi-val{font-family:'Lora',serif;font-size:24px;color:var(--red);line-height:1;}
+.kpi-label{font-size:10px;color:var(--slate);text-transform:uppercase;letter-spacing:.7px;margin-top:2px;}
+
+/* TABS */
+.tabs-bar{display:flex;background:var(--bg2);border-bottom:1px solid var(--border);padding:0 48px;}
+.tab-btn{padding:12px 20px;font-size:11px;font-weight:500;letter-spacing:.6px;text-transform:uppercase;color:var(--slate);cursor:pointer;border-bottom:2px solid transparent;transition:all .18s;background:none;border-top:none;border-left:none;border-right:none;font-family:'IBM Plex Sans',sans-serif;}
+.tab-btn:hover{color:var(--navy);}
+.tab-btn.active{color:var(--red);border-bottom-color:var(--red);}
+
+/* BREADCRUMB */
+.breadcrumb{display:none;align-items:center;gap:8px;padding:10px 48px;background:var(--bg3);border-bottom:1px solid var(--border);font-size:12px;color:var(--slate);}
+.breadcrumb.visible{display:flex;}
+.bc-link{color:var(--red);cursor:pointer;font-weight:500;}
+.bc-link:hover{text-decoration:underline;}
+.bc-sep{color:var(--slate-light);}
+.bc-current{color:var(--text2);font-weight:500;}
+
+/* SEARCH AREA */
+.search-area-outer{display:flex;gap:20px;padding:20px 48px 0;align-items:flex-start;}
+.search-col-left{flex:1;min-width:0;}
+.search-bar-wrap{padding:0;display:flex;gap:12px;align-items:center;}
+.status-filters{padding:10px 0 0;display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+.search-input-wrap{position:relative;flex:1;max-width:560px;}
+.search-input-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--slate-light);pointer-events:none;}
+#search-input{width:100%;padding:10px 12px 10px 38px;border:1px solid var(--border);border-radius:8px;font-family:'IBM Plex Sans',sans-serif;font-size:13px;color:var(--text);background:var(--bg2);transition:border-color .18s,box-shadow .18s;outline:none;}
+#search-input:focus{border-color:var(--red);box-shadow:0 0 0 3px var(--red-light);}
+#search-input::placeholder{color:var(--slate-light);}
+.search-clear{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--slate-light);font-size:16px;line-height:1;padding:2px 4px;display:none;}
+.search-clear.visible{display:block;}
+.search-hint{font-size:11px;color:var(--slate);white-space:nowrap;}
+
+/* STATUS FILTER CHIPS */
+.status-filters{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+.status-filters .sf-label{font-size:11px;color:var(--slate);margin-right:4px;white-space:nowrap;}
+.sf-chip{font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;border:1px solid;cursor:pointer;transition:all .15s;user-select:none;display:flex;align-items:center;gap:5px;}
+.sf-chip .sf-count{font-family:'IBM Plex Mono',monospace;font-size:10px;opacity:.8;}
+.sf-chip[data-status="alle"]{background:var(--navy);border-color:var(--navy);color:#fff;}
+.sf-chip[data-status="aktiv"]{background:var(--s-aktiv-bg);border-color:var(--s-aktiv-border);color:var(--s-aktiv);}
+.sf-chip[data-status="udlober"]{background:var(--s-udlober-bg);border-color:var(--s-udlober-border);color:var(--s-udlober);}
+.sf-chip[data-status="udloebet"]{background:var(--s-udloebet-bg);border-color:var(--s-udloebet-border);color:var(--s-udloebet);}
+.sf-chip[data-status="opsagt"]{background:var(--s-opsagt-bg);border-color:var(--s-opsagt-border);color:var(--s-opsagt);}
+.sf-chip.inactive{background:var(--bg2)!important;color:var(--slate)!important;border-color:var(--border)!important;opacity:.6;}
+
+/* STATUS BADGE */
+.status-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;border:1px solid;white-space:nowrap;letter-spacing:.2px;flex-shrink:0;}
+.status-badge::before{content:'';width:5px;height:5px;border-radius:50%;flex-shrink:0;}
+.status-badge.aktiv{background:var(--s-aktiv-bg);border-color:var(--s-aktiv-border);color:var(--s-aktiv);}
+.status-badge.aktiv::before{background:var(--s-aktiv);}
+.status-badge.udlober{background:var(--s-udlober-bg);border-color:var(--s-udlober-border);color:var(--s-udlober);}
+.status-badge.udlober::before{background:var(--s-udlober);}
+.status-badge.udloebet{background:var(--s-udloebet-bg);border-color:var(--s-udloebet-border);color:var(--s-udloebet);}
+.status-badge.udloebet::before{background:var(--s-udloebet);}
+.status-badge.opsagt{background:var(--s-opsagt-bg);border-color:var(--s-opsagt-border);color:var(--s-opsagt);}
+.status-badge.opsagt::before{background:var(--s-opsagt);}
+
+/* MAIN */
+main{padding:20px 48px 60px;}
+.panel{display:none;}
+.panel.active{display:block;}
+.section-eyebrow{font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--red);font-weight:600;margin-bottom:5px;}
+.section-heading{font-family:'Lora',serif;font-size:19px;font-weight:600;color:var(--navy);margin-bottom:26px;}
+
+/* MINISTRY OVERVIEW */
+.ministry-list{display:flex;flex-direction:column;gap:6px;}
+.ministry-row{display:grid;grid-template-columns:290px 1fr 44px;align-items:center;gap:16px;padding:11px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;cursor:pointer;transition:all .18s;opacity:0;transform:translateY(5px);animation:fadeUp .3s forwards;}
+.ministry-row:hover{border-color:var(--red);box-shadow:0 2px 10px var(--shadow);transform:translateX(3px) translateY(0);}
+@keyframes fadeUp{to{opacity:1;transform:none;}}
+.mr-name{font-size:13px;color:var(--text2);display:flex;align-items:center;gap:8px;}
+.mr-arrow{color:var(--slate-light);font-size:14px;transition:transform .18s,color .18s;}
+.ministry-row:hover .mr-arrow{color:var(--red);transform:translateX(3px);}
+.bar-track{height:16px;background:var(--bg3);border-radius:3px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:3px;background:var(--red);transition:width .7s cubic-bezier(.16,1,.3,1);width:0;}
+.bar-fill.top{background:linear-gradient(90deg,#8a1510,var(--red));}
+.bar-count{font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:500;color:var(--navy);text-align:right;}
+
+/* PARTY OVERVIEW */
+.party-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;}
+.party-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:16px 16px 14px;cursor:pointer;transition:all .18s;position:relative;overflow:hidden;opacity:0;transform:translateY(8px);animation:fadeUp .3s forwards;}
+.party-card:hover{border-color:var(--red);box-shadow:0 4px 16px var(--shadow);transform:translateY(-2px);}
+.party-card::after{content:'→';position:absolute;bottom:13px;right:14px;font-size:15px;color:var(--slate-light);transition:color .18s,transform .18s;}
+.party-card:hover::after{color:var(--red);transform:translateX(3px);}
+.pc-topbar{height:3px;position:absolute;top:0;left:0;right:0;}
+.tier1 .pc-topbar{background:var(--red);}
+.tier2 .pc-topbar{background:#6b8fad;}
+.tier3 .pc-topbar{background:#a0adb8;}
+.tier4 .pc-topbar{background:#ccc;}
+.pc-abbr{font-family:'Lora',serif;font-size:22px;font-weight:600;color:var(--navy);margin-bottom:2px;}
+.pc-name{font-size:11px;color:var(--slate);margin-bottom:12px;line-height:1.4;padding-right:18px;}
+.pc-count{font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:500;color:var(--navy);line-height:1;margin-bottom:9px;}
+.pc-bar-track{height:4px;background:var(--bg3);border-radius:2px;overflow:hidden;margin-bottom:5px;}
+.pc-bar-fill{height:100%;border-radius:2px;background:var(--red);transition:width .8s cubic-bezier(.16,1,.3,1);width:0;}
+.tier2 .pc-bar-fill{background:#6b8fad;}
+.tier3 .pc-bar-fill{background:#a0adb8;}
+.tier4 .pc-bar-fill{background:#ccc;}
+.pc-pct{font-size:10px;color:var(--slate);font-weight:300;}
+
+/* DETAIL */
+.detail-header{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-bottom:16px;padding-bottom:20px;border-bottom:1px solid var(--border);}
+.detail-title{font-family:'Lora',serif;font-size:clamp(17px,2.2vw,26px);font-weight:600;color:var(--navy);line-height:1.25;}
+.detail-sub{margin-top:5px;font-size:12px;color:var(--slate);}
+.detail-badge{background:var(--red);color:#fff;font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:500;border-radius:8px;padding:12px 20px;line-height:1;white-space:nowrap;text-align:center;flex-shrink:0;}
+.detail-badge small{display:block;font-family:'IBM Plex Sans',sans-serif;font-size:10px;font-weight:400;text-transform:uppercase;letter-spacing:1px;margin-top:3px;opacity:.8;}
+
+/* Detail status filter row */
+.detail-status-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;align-items:center;}
+.detail-status-row .sf-label{font-size:11px;color:var(--slate);margin-right:2px;}
+
+/* AGREEMENT ROWS */
+.agreement-list{display:flex;flex-direction:column;gap:8px;}
+.agreement-row{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:14px 18px;opacity:0;transform:translateY(5px);animation:fadeUp .3s forwards;cursor:default;transition:border-color .15s,box-shadow .15s;position:relative;}
+.agreement-row:hover{border-color:var(--border-dark);box-shadow:0 2px 8px var(--shadow);}
+.agreement-row.hidden{display:none;}
+.ar-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:9px;}
+.ar-title-wrap{display:flex;align-items:flex-start;gap:8px;flex:1;flex-wrap:wrap;}
+.ar-title{font-size:13px;font-weight:500;color:var(--text);line-height:1.5;}
+.ar-meta{display:flex;align-items:center;gap:6px;flex-shrink:0;margin-top:1px;}
+.ar-year{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--slate);background:var(--bg3);border:1px solid var(--border);padding:2px 7px;border-radius:3px;white-space:nowrap;}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px;}
+.chip{font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px;background:var(--bg3);color:var(--navy2);border:1px solid var(--border);font-family:'IBM Plex Mono',monospace;}
+.chip.hl{background:var(--red-light);border-color:var(--red-mid);color:var(--red);}
+.ar-info-icon{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:var(--bg3);border:1px solid var(--border-dark);color:var(--slate);font-size:10px;font-weight:600;flex-shrink:0;cursor:help;font-style:normal;line-height:1;transition:background .15s,color .15s;margin-top:2px;}
+.agreement-row:hover .ar-info-icon{background:var(--red-light);border-color:var(--red-mid);color:var(--red);}
+
+/* SEARCH RESULTS */
+#panel-search .search-result-ministry{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--red);font-weight:600;margin:22px 0 8px;padding-bottom:5px;border-bottom:1px solid var(--border);}
+#panel-search .search-result-ministry:first-child{margin-top:0;}
+.no-results{padding:48px 0;text-align:center;color:var(--slate);font-size:14px;}
+.no-results strong{display:block;font-family:'Lora',serif;font-size:20px;color:var(--navy);margin-bottom:8px;}
+
+/* TOOLTIP */
+#tooltip{position:fixed;z-index:9999;max-width:340px;min-width:220px;background:var(--navy);color:#e8e4de;border-radius:8px;padding:14px 16px;font-size:12px;line-height:1.6;box-shadow:0 8px 32px rgba(0,0,0,.22);pointer-events:none;opacity:0;transition:opacity .15s;border:1px solid rgba(255,255,255,.08);}
+#tooltip.visible{opacity:1;}
+#tooltip .tt-label{font-size:9px;text-transform:uppercase;letter-spacing:1.2px;color:#7a9ab5;font-weight:600;margin-bottom:3px;}
+#tooltip .tt-val{color:#e8e4de;margin-bottom:10px;}
+#tooltip .tt-val:last-child{margin-bottom:0;}
+#tooltip .tt-expires{font-family:'IBM Plex Mono',monospace;font-size:13px;color:#f0c060;font-weight:500;}
+#tooltip .tt-divider{height:1px;background:rgba(255,255,255,.08);margin:10px 0;}
+
+/* NOTE */
+.note{margin-top:28px;padding:13px 16px;background:var(--gold-bg);border-left:3px solid #c49b1a;border-radius:0 4px 4px 0;font-size:11px;color:var(--gold);line-height:1.7;}
+.note strong{color:var(--gold);font-weight:600;}
+
+/* FOOTER */
+footer{padding:16px 48px;border-top:1px solid var(--border);background:var(--bg2);display:flex;justify-content:space-between;align-items:center;}
+footer span{font-size:11px;color:var(--slate-light);}
+
+/* MINISTRY EXTERNAL LINK */
+.ministry-ext-link{display:inline-flex;align-items:center;gap:7px;margin-top:10px;font-size:12px;font-weight:600;color:var(--red);text-decoration:none;border:1px solid var(--red-mid);background:var(--red-light);padding:7px 14px;border-radius:6px;transition:background .15s,border-color .15s,box-shadow .15s;}
+.ministry-ext-link:hover{background:#f3d0cb;border-color:var(--red);box-shadow:0 2px 8px rgba(184,44,30,.12);}
+.ministry-ext-link svg{flex-shrink:0;}
+
+/* AGREEMENT SEARCH LINK */
+.ar-search-link{display:inline-flex;align-items:center;gap:5px;padding:3px 10px 3px 7px;border-radius:5px;background:var(--bg3);border:1px solid var(--border);color:var(--slate);text-decoration:none;font-size:10px;font-weight:500;transition:background .15s,color .15s,border-color .15s;flex-shrink:0;margin-top:1px;white-space:nowrap;}
+.ar-search-link:hover{background:var(--navy);border-color:var(--navy);color:#fff;}
+.ar-search-link svg{pointer-events:none;flex-shrink:0;}
+
+/* POLITIKOMRÅDE TAGS */
+.omrade-tag{display:inline-block;font-size:9.5px;font-weight:600;padding:1px 7px;border-radius:20px;letter-spacing:.2px;border:1px solid;white-space:nowrap;}
+.ok-klima{background:#dcfce7;color:#166534;border-color:#bbf7d0;}
+.ok-oekonomi{background:#fef3c7;color:#92400e;border-color:#fde68a;}
+.ok-forsvar{background:#fee2e2;color:#7f1d1d;border-color:#fecaca;}
+.ok-arbejdsmarked{background:#fff7ed;color:#9a3412;border-color:#fed7aa;}
+.ok-retsvæsen{background:#f3e8ff;color:#6b21a8;border-color:#d8b4fe;}
+.ok-uddannelse{background:#e0f2fe;color:#0c4a6e;border-color:#bae6fd;}
+.ok-sundhed{background:#fce7f3;color:#9d174d;border-color:#fbcfe8;}
+.ok-kultur{background:#fdf4ff;color:#86198f;border-color:#f0abfc;}
+.ok-transport{background:#ede9fe;color:#4c1d95;border-color:#c4b5fd;}
+.ok-byogland{background:#fefce8;color:#78350f;border-color:#fef08a;}
+.ok-miljoe{background:#f0fdf4;color:#14532d;border-color:#86efac;}
+.ok-digital{background:#e0f2fe;color:#164e63;border-color:#7dd3fc;}
+.ok-udenrigs{background:#f1f5f9;color:#334155;border-color:#cbd5e1;}
+
+/* BREADTH BADGE */
+.breadth-badge{display:inline-flex;align-items:center;gap:3px;font-size:9.5px;font-weight:600;padding:1px 7px;border-radius:20px;border:1px solid;white-space:nowrap;}
+.breadth-bred{background:#dcfce7;color:#166534;border-color:#bbf7d0;}
+.breadth-middel{background:#fef3c7;color:#92400e;border-color:#fde68a;}
+.breadth-smal{background:#f3f4f6;color:#374151;border-color:#d1d5db;}
+
+/* EXPORT BUTTON */
+.export-btn{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:500;color:var(--slate);background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:6px 12px;cursor:pointer;transition:all .15s;font-family:'IBM Plex Sans',sans-serif;}
+.export-btn:hover{border-color:var(--navy);color:var(--navy);background:var(--bg3);}
+
+/* RELATIONS */
+.ar-relations{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;}
+.rel-tag{display:inline-flex;align-items:center;gap:4px;font-size:10px;padding:2px 8px;border-radius:4px;border:1px solid;cursor:pointer;transition:background .15s;white-space:nowrap;}
+.rel-tag:hover{filter:brightness(.93);}
+.rel-justerer{background:#ede9fe;border-color:#c4b5fd;color:#4c1d95;}
+.rel-erstatter{background:#fee2e2;border-color:#fecaca;color:#7f1d1d;}
+.rel-delaftale{background:#e0f2fe;border-color:#bae6fd;color:#0c4a6e;}
+.rel-relateret{background:#f3f4f6;border-color:#d1d5db;color:#374151;}
+.rel-viderefoerer{background:#dcfce7;border-color:#bbf7d0;color:#166534;}
+.rel-label{font-weight:600;font-size:9px;opacity:.75;}
+
+/* TIMELINE */
+.ar-timeline{display:flex;align-items:center;gap:0;margin-top:8px;overflow-x:auto;padding-bottom:2px;}
+.tl-item{display:flex;flex-direction:column;align-items:center;position:relative;min-width:72px;}
+.tl-item:not(:last-child)::after{content:'';position:absolute;top:7px;left:calc(50% + 8px);right:calc(-50% + 8px);height:1px;background:var(--border-dark);}
+.tl-dot{width:14px;height:14px;border-radius:50%;border:2px solid;flex-shrink:0;background:white;z-index:1;}
+.tl-dot.indgaaet{border-color:var(--navy);background:var(--navy);}
+.tl-dot.justeret{border-color:#6b8fad;background:#6b8fad;}
+.tl-dot.opsagt{border-color:var(--red);background:var(--red);}
+.tl-dot.udloeber{border-color:#f59e0b;background:#f59e0b;}
+.tl-lbl{font-size:8.5px;color:var(--slate);margin-top:3px;text-align:center;line-height:1.3;}
+.tl-yr{font-size:9px;font-weight:600;color:var(--navy2);text-align:center;}
+
+/* OMRAADE FILTER */
+.omraade-filters{display:flex;gap:5px;flex-wrap:wrap;align-items:center;padding:6px 0 0;}
+.omraade-filters .sf-label{font-size:11px;color:var(--slate);margin-right:2px;}
+.of-chip{font-size:10px;font-weight:600;padding:2px 9px;border-radius:20px;border:1px solid;cursor:pointer;transition:opacity .15s;user-select:none;}
+.of-chip.inactive{opacity:.45;}
+
+/* JSON EXPORT */
+.export-btn-json{background:var(--bg3);color:var(--navy);}
+.export-btn-json:hover{background:var(--border);}
+.ak-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px;}
+@media(max-width:700px){.ak-summary{grid-template-columns:1fr 1fr;}}
+.ak-sum-card{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:14px 16px;}
+.ak-sum-val{font-family:'Lora',serif;font-size:26px;font-weight:600;line-height:1;}
+.ak-sum-label{font-size:10.5px;color:var(--slate);margin-top:4px;line-height:1.4;}
+.ak-section{margin-bottom:30px;}
+.ak-section-hd{display:flex;align-items:center;gap:8px;margin-bottom:4px;}
+.ak-section-title{font-size:10px;text-transform:uppercase;letter-spacing:1.8px;font-weight:700;color:var(--navy);}
+.ak-count{background:var(--navy);color:#fff;font-family:'IBM Plex Mono',monospace;font-size:9px;padding:1px 7px;border-radius:10px;}
+.ak-section-sub{font-size:11.5px;color:var(--slate);margin-bottom:12px;}
+.ak-empty{font-size:12px;color:var(--slate);font-style:italic;padding:8px 0;}
+.ak-list{display:flex;flex-direction:column;gap:6px;}
+.ak-row{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:10px 14px;display:flex;align-items:flex-start;justify-content:space-between;gap:10px;transition:border-color .15s;}
+.ak-row:hover{border-color:var(--border-dark);}
+.ak-row-left{flex:1;min-width:0;}
+.ak-row-title{font-size:12.5px;font-weight:500;color:var(--text);margin-bottom:5px;line-height:1.4;}
+.ak-row-meta{display:flex;flex-wrap:wrap;gap:5px;align-items:center;}
+.ak-row-right{flex-shrink:0;text-align:right;}
+.ak-expires-pill{font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--navy);background:var(--bg3);border:1px solid var(--border);padding:2px 8px;border-radius:3px;white-space:nowrap;}
+.ak-expires-pill.red{background:var(--red-light);border-color:var(--red-mid);color:var(--red);}
+.ak-expires-pill.amber{background:#fef3c7;border-color:#fde68a;color:#92400e;}
+.ak-divider{height:1px;background:var(--border);margin:20px 0;}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px;}
+/* OVERVIEW EXPLAINER SIDEBAR */
+#overview-explainer-box{width:270px;flex-shrink:0;background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:11px 14px;}
+.oe-title{font-size:9.5px;text-transform:uppercase;letter-spacing:1.2px;font-weight:700;color:var(--navy);margin-bottom:8px;}
+.oe-step{display:flex;gap:8px;align-items:flex-start;margin-bottom:6px;font-size:11px;color:var(--text2);line-height:1.5;}
+.oe-step:last-of-type{margin-bottom:8px;}
+.oe-num{width:16px;height:16px;border-radius:50%;background:var(--navy);color:#fff;font-size:8.5px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.oe-more{font-size:10.5px;color:var(--red);cursor:pointer;text-decoration:none;display:block;padding-top:7px;border-top:1px solid var(--border);}
+.oe-more:hover{text-decoration:underline;}
+
+@media(max-width:900px){#overview-explainer-box{display:none;}}
+@media(max-width:680px){
+  .info-grid{grid-template-columns:1fr;}
+  header{padding:18px 20px;flex-direction:column;align-items:flex-start;}
+  .tabs-bar,.breadcrumb,.search-area-outer{padding-left:20px;padding-right:20px;}
+  main{padding:16px 20px 48px;}
+  .ministry-row{grid-template-columns:1fr 36px;}
+  .ministry-row .bar-track{display:none;}
+  footer{padding:14px 20px;flex-direction:column;gap:6px;}
+}
+.info-box{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:18px 20px;}
+.info-box-title{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;font-weight:600;color:var(--red);margin-bottom:10px;}
+.info-box p{font-size:12px;color:var(--text2);line-height:1.75;margin-bottom:8px;}
+.info-box p:last-child{margin-bottom:0;}
+.info-box ul{font-size:12px;color:var(--text2);line-height:1.75;padding-left:16px;}
+.info-box ul li{margin-bottom:4px;}
+.info-box .cite{font-size:11px;color:var(--slate);font-style:italic;margin-top:8px;padding-top:8px;border-top:1px solid var(--border);}
+.link-explainer{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:18px 20px;margin-bottom:28px;}
+.link-explainer-title{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;font-weight:600;color:var(--navy);margin-bottom:10px;}
+.link-step{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px;}
+.link-step:last-child{margin-bottom:0;}
+.link-step-num{width:22px;height:22px;border-radius:50%;background:var(--navy);color:#fff;font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.link-step-text{font-size:12px;color:var(--text2);line-height:1.65;}
+.link-step-text strong{color:var(--navy);font-weight:600;}
+
+/* EXPERT VIEW TOGGLE */
+.view-toggle{display:flex;gap:2px;margin-bottom:16px;}
+.vt-btn{padding:5px 12px;font-size:11px;font-weight:500;border:1px solid var(--border);background:var(--bg2);color:var(--slate);cursor:pointer;font-family:'IBM Plex Sans',sans-serif;transition:all .15s;}
+.vt-btn:first-child{border-radius:5px 0 0 5px;}
+.vt-btn:last-child{border-radius:0 5px 5px 0;}
+.vt-btn.active{background:var(--navy);border-color:var(--navy);color:#fff;}
+.expert-table-wrap{overflow-x:auto;}
+.expert-table{width:100%;border-collapse:collapse;font-size:12px;}
+.expert-table th{text-align:left;padding:7px 10px;font-size:9.5px;text-transform:uppercase;letter-spacing:.8px;color:var(--slate);border-bottom:2px solid var(--border);font-weight:600;background:var(--bg3);white-space:nowrap;}
+.expert-table td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.expert-table tr:last-child td{border-bottom:none;}
+.expert-table tr:hover td{background:var(--bg3);}
+.et-title{font-size:12px;font-weight:500;color:var(--text);line-height:1.3;}
+.et-expires{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--navy);white-space:nowrap;}
+
+/* HOTSPOT CARDS */
+.hotspot-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-bottom:30px;}
+.hotspot-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;border-left:4px solid var(--red);}
+.hc-rank{font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;color:var(--red);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;}
+.hc-title{font-size:13px;font-weight:600;color:var(--navy);line-height:1.4;margin-bottom:7px;}
+.hc-meta{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:5px;}
+.hc-reason{font-size:11px;color:var(--slate);line-height:1.5;font-style:italic;}
+
+/* POLITIKOMRÅDE PANEL */
+.omraade-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;}
+.omraade-card{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 16px;cursor:pointer;transition:all .18s;position:relative;}
+.omraade-card:hover{border-color:var(--red);box-shadow:0 2px 10px var(--shadow);transform:translateY(-1px);}
+.omraade-card::after{content:'→';position:absolute;bottom:12px;right:14px;color:var(--slate-light);font-size:14px;transition:color .15s;}
+.omraade-card:hover::after{color:var(--red);}
+.oc-label{font-size:13px;font-weight:600;color:var(--navy);margin-bottom:4px;}
+.oc-count{font-family:'IBM Plex Mono',monospace;font-size:24px;font-weight:500;color:var(--navy);line-height:1;margin-bottom:4px;}
+.oc-sub{font-size:10.5px;color:var(--slate);}
+.oc-bar{height:3px;border-radius:2px;background:var(--border);margin-top:8px;overflow:hidden;}
+.oc-bar-fill{height:100%;border-radius:2px;background:var(--red);transition:width .7s cubic-bezier(.16,1,.3,1);width:0;}
+
+/* RELATIONS */
+.relations-wrap{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:11px 14px;margin-top:8px;}
+.relations-title{font-size:9px;text-transform:uppercase;letter-spacing:1.2px;font-weight:700;color:var(--slate);margin-bottom:7px;}
+.rel-item{display:flex;align-items:flex-start;gap:7px;margin-bottom:4px;font-size:11.5px;color:var(--text2);line-height:1.4;}
+.rel-item:last-child{margin-bottom:0;}
+.rel-icon{flex-shrink:0;color:var(--slate);font-size:11px;margin-top:1px;}
+
+/* MANDATES */
+.mandate-wrap{display:flex;gap:16px;flex-wrap:wrap;margin-top:8px;padding:10px 14px;background:var(--bg3);border-radius:6px;border:1px solid var(--border);align-items:center;}
+.mandate-item{font-size:11px;color:var(--slate);}
+.mandate-val{font-family:'IBM Plex Mono',monospace;font-weight:700;color:var(--navy);font-size:14px;}
+.mandate-label{color:var(--slate);margin-left:2px;font-size:11px;}
+.mandate-sep{color:var(--border-dark);font-size:16px;}
+.pivot-tag{background:#fef3c7;border:1px solid #fde68a;color:#92400e;font-size:9px;font-weight:700;padding:1px 6px;border-radius:10px;margin-left:3px;vertical-align:middle;}
+
+.historik-chart-svg { width:100%; overflow:visible; }
+.h-bar { transition: opacity .15s; cursor:default; }
+.h-bar:hover { opacity:.85; }
+.h-axis-label { font-family:'IBM Plex Sans',sans-serif; fill:var(--slate); }
+.h-val-label { font-family:'IBM Plex Mono',monospace; font-weight:500; }
+.h-event-line { stroke:var(--border-dark); stroke-dasharray:4 3; stroke-width:1.5; }
+.h-event-label { font-family:'IBM Plex Sans',sans-serif; font-size:10px; fill:var(--slate); }
+.h-confirmed-dot { fill:var(--red); }
+.h-estimated-dot { fill:var(--slate-light); }
+
+.historik-table-wrap { overflow-x:auto; }
+.historik-table-el { width:100%; border-collapse:collapse; font-size:12px; }
+.historik-table-el th { text-align:left; padding:8px 12px; font-size:10px; text-transform:uppercase; letter-spacing:.8px; color:var(--slate); border-bottom:2px solid var(--border); font-weight:600; background:var(--bg3); }
+.historik-table-el td { padding:10px 12px; border-bottom:1px solid var(--border); color:var(--text2); vertical-align:top; }
+.historik-table-el tr:last-child td { border-bottom:none; }
+.historik-table-el tr:hover td { background:var(--bg3); }
+.h-count-cell { font-family:'IBM Plex Mono',monospace; font-weight:500; font-size:14px; color:var(--navy); }
+.h-conf-badge { display:inline-block; font-size:9px; padding:1px 6px; border-radius:10px; font-weight:600; letter-spacing:.3px; }
+.h-conf-badge.yes { background:var(--s-aktiv-bg); color:var(--s-aktiv); border:1px solid var(--s-aktiv-border); }
+.h-conf-badge.est { background:var(--bg3); color:var(--slate); border:1px solid var(--border); }
+.h-source-link { color:var(--red); text-decoration:none; font-size:11px; }
+.h-source-link:hover { text-decoration:underline; }
+.h-gov-tag { display:inline-block; font-size:10px; padding:2px 7px; border-radius:3px; background:var(--bg3); color:var(--slate); border:1px solid var(--border); margin-top:2px; }
+  header{padding:18px 20px;flex-direction:column;align-items:flex-start;}
+  .tabs-bar,.breadcrumb,.search-area-outer{padding-left:20px;padding-right:20px;}
+  main{padding:16px 20px 48px;}
+  .ministry-row{grid-template-columns:1fr 36px;}
+  .ministry-row .bar-track{display:none;}
+  footer{padding:14px 20px;flex-direction:column;gap:6px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-title">
+    <div class="red-line"></div>
+    <h1>Politiske Forlig 2025</h1>
+    <p>Foreløbig oversigt pr. 1. oktober 2025 · Finansudvalget 2025–26</p>
+  </div>
+  <div class="kpis">
+    <div class="kpi"><div class="kpi-val">107</div><div class="kpi-label">Aktive forlig</div></div>
+    <div class="kpi"><div class="kpi-val">17</div><div class="kpi-label">Ministerier</div></div>
+    <div class="kpi"><div class="kpi-val">12</div><div class="kpi-label">Partier</div></div>
+  </div>
+</header>
+
+<nav class="tabs-bar">
+  <button class="tab-btn active" onclick="showOverview('ministerier',this)">Pr. ministerium</button>
+  <button class="tab-btn" onclick="showOverview('partier',this)">Pr. parti</button>
+  <button class="tab-btn" onclick="showOverview('omraade',this)">Pr. politikområde</button>
+  <button class="tab-btn" onclick="showOverview('aktualitet',this)">Politisk aktualitet</button>
+  <button class="tab-btn" onclick="showOverview('historik',this)">Historisk udvikling</button>
+  <button class="tab-btn" id="tab-search" onclick="showOverview('search',this)" style="display:none">Søgeresultater</button>
+</nav>
+
+<div class="breadcrumb" id="breadcrumb">
+  <span class="bc-link" id="bc-link" onclick="goBack()">← Oversigt</span>
+  <span class="bc-sep">/</span>
+  <span class="bc-current" id="bc-current"></span>
+</div>
+
+<!-- GLOBAL SEARCH + STATUS FILTER + EXPLAINER -->
+<div class="search-area-outer">
+  <div class="search-col-left">
+    <div class="search-bar-wrap">
+      <div class="search-input-wrap">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input id="search-input" type="text" placeholder="Søg på tværs af alle forlig, ministerier og partier…" oninput="onSearch(this.value)" autocomplete="off">
+        <button class="search-clear" id="search-clear" onclick="clearSearch()">×</button>
+      </div>
+      <span class="search-hint" id="search-hint"></span>
+      <button class="export-btn" onclick="exportCSV()" title="Download alle forlig som CSV">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        CSV
+      </button>
+      <button class="export-btn export-btn-json" onclick="exportJSON()" title="Download alle forlig som JSON">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        JSON
+      </button>
+    </div>
+    <div class="status-filters" id="global-status-filters">
+      <span class="sf-label">Status:</span>
+      <span class="sf-chip" data-status="alle" onclick="setGlobalFilter('alle',this)">Alle <span class="sf-count" id="fc-alle"></span></span>
+      <span class="sf-chip" data-status="aktiv" onclick="setGlobalFilter('aktiv',this)">Aktiv <span class="sf-count" id="fc-aktiv"></span></span>
+      <span class="sf-chip" data-status="udlober" onclick="setGlobalFilter('udlober',this)">Udløber snart <span class="sf-count" id="fc-udlober"></span></span>
+      <span class="sf-chip" data-status="udloebet" onclick="setGlobalFilter('udloebet',this)">Udløbet <span class="sf-count" id="fc-udloebet"></span></span>
+      <span class="sf-chip" data-status="opsagt" onclick="setGlobalFilter('opsagt',this)">Opsagt/varslet <span class="sf-count" id="fc-opsagt"></span></span>
+    </div>
+    <div class="omraade-filters" id="omraade-filters">
+      <span class="sf-label">Område:</span>
+    </div>
+  </div>
+
+  <div id="overview-explainer-box">
+    <div class="oe-title">Sådan finder du aftaleteksterne</div>
+    <div class="oe-step">
+      <div class="oe-num">1</div>
+      <div>Klik ind på et ministerium eller parti og tryk <strong>"Søg aftale"</strong> ved det enkelte forlig – søger direkte på regeringen.dk og ft.dk.</div>
+    </div>
+    <div class="oe-step">
+      <div class="oe-num">2</div>
+      <div>Klik ind på et ministerium og brug knappen <strong>"Se aftaler på [ministerium].dk"</strong> for at gå til ministeriets samlede aftaleoversigt.</div>
+    </div>
+    <a class="oe-more" onclick="document.querySelector('.tab-btn:nth-child(3)').click()">
+      Læs om definition og forbehold → Historisk udvikling
+    </a>
+  </div>
+</div>
+
+<main>
+  <!-- MINISTERIER -->
+  <div class="panel active" id="panel-ministerier">
+    <div class="section-eyebrow">Ministerier</div>
+    <div class="section-heading">Klik på et ministerium for at se de enkelte aftaler</div>
+    <div class="ministry-list" id="ministry-list"></div>
+    <div class="note"><strong>Note:</strong> Statsministeriet, Økonomiministeriet, Ministeriet for Samfundssikkerhed og Beredskab, Udlændinge- og Integrationsministeriet, Social- og Boligministeriet, Ældreministeriet og Ministeriet for Fødevarer, Landbrug og Fiskeri har ingen gældende forlig pr. 1. oktober 2025.</div>
+  </div>
+
+  <!-- PARTIER -->
+  <div class="panel" id="panel-partier">
+    <div class="section-eyebrow">Partier</div>
+    <div class="section-heading">Klik på et parti for at se de enkelte aftaler</div>
+    <div class="party-grid" id="party-grid"></div>
+    <div class="note"><strong>Note:</strong> Opgørelsen angiver det antal aktive forlig, hvori det enkelte parti indgår som aftalepart. S, V og M deltager i alle 107 forlig. M's deltagelse skyldes primært regeringsdannelsen. ALT og Å er slået sammen til ét parti.</div>
+  </div>
+
+  <!-- SEARCH RESULTS -->
+  <div class="panel" id="panel-search">
+    <div class="section-eyebrow">Søgning</div>
+    <div class="section-heading" id="search-heading">Resultater</div>
+    <div id="search-results"></div>
+  </div>
+
+  <!-- MINISTRY DETAIL -->
+  <div class="panel" id="panel-ministry-detail">
+    <div class="detail-header">
+      <div><div class="section-eyebrow">Ministerium</div><div class="detail-title" id="md-title"></div><div class="detail-sub" id="md-sub"></div></div>
+      <div class="detail-badge" id="md-badge"></div>
+    </div>
+    <div class="detail-status-row" id="md-status-row"></div>
+    <div class="view-toggle">
+      <button class="vt-btn active" onclick="setDetailView('md','cards',this)">Kortoversigt</button>
+      <button class="vt-btn" onclick="setDetailView('md','table',this)">Ekspert-visning</button>
+    </div>
+    <div id="md-list"></div>
+  </div>
+
+  <!-- PARTY DETAIL -->
+  <div class="panel" id="panel-party-detail">
+    <div class="detail-header">
+      <div><div class="section-eyebrow">Parti</div><div class="detail-title" id="pd-title"></div><div class="detail-sub" id="pd-sub"></div></div>
+      <div class="detail-badge" id="pd-badge"></div>
+    </div>
+    <div class="detail-status-row" id="pd-status-row"></div>
+    <div class="view-toggle">
+      <button class="vt-btn active" onclick="setDetailView('pd','cards',this)">Kortoversigt</button>
+      <button class="vt-btn" onclick="setDetailView('pd','table',this)">Ekspert-visning</button>
+    </div>
+    <div id="pd-list"></div>
+  </div>
+
+  <!-- POLITISK AKTUALITET -->
+  <div class="panel" id="panel-aktualitet">
+    <div class="section-eyebrow">Politisk aktualitet</div>
+    <div class="section-heading">Hvad kræver politisk opmærksomhed?</div>
+    <div id="ak-summary" class="ak-summary"></div>
+    <div id="ak-content"></div>
+  </div>
+
+  <!-- PR. POLITIKOMRÅDE -->
+  <div class="panel" id="panel-omraade">
+    <div class="section-eyebrow">Politikområder</div>
+    <div class="section-heading">Klik på et politikområde for at se de tilhørende forlig</div>
+    <div class="omraade-grid" id="omraade-grid"></div>
+  </div>
+
+  <!-- OMRAADE DETAIL -->
+  <div class="panel" id="panel-omraade-detail">
+    <div class="detail-header">
+      <div><div class="section-eyebrow">Politikområde</div><div class="detail-title" id="od-title"></div><div class="detail-sub" id="od-sub"></div></div>
+      <div class="detail-badge" id="od-badge"></div>
+    </div>
+    <div class="detail-status-row" id="od-status-row"></div>
+    <div class="agreement-list" id="od-list"></div>
+  </div>
+
+  <!-- HISTORISK UDVIKLING -->
+  <div class="panel" id="panel-historik">
+    <div class="section-eyebrow">Historisk udvikling</div>
+    <div class="section-heading">Hvad er et politisk forlig?</div>
+
+    <div class="info-grid">
+      <div class="info-box">
+        <div class="info-box-title">Definition</div>
+        <p>Et politisk forlig er en skriftlig aftale indgået mellem regeringen og et eller flere Folketing­spartier, der forpligter alle parter til at støtte det aftalte indhold – typisk ved at stemme for de nødvendige lovforslag – og til at inddrage hinanden, inden der foretages væsentlige ændringer på det forligsbelagte område.</p>
+        <p>Forlig adskiller sig fra stemmeaftaler ved at have en vedvarende, gensidig forpligtelse: parterne kan ikke opsige eller ændre aftalen ensidigt, men skal have de øvrige forligspartneres accept. Det giver langsigtede, stabile rammer på tværs af valgperioder.</p>
+        <p class="cite">Kilde: Finansministeriet, <em>Praksis vedr. gældende forlig</em> (februar 2023) · Folketing, <em>Notat om normer for politiske forlig</em>, UFO Alm.del 2016-17, bilag 7</p>
+      </div>
+
+      <div class="info-box">
+        <div class="info-box-title">Forbehold ved definitionen</div>
+        <p>Finansministeriet slår selv fast i sine FIU-svar: <em>"Der eksisterer ikke en entydig definition af politiske forlig eller deres varighed."</em> Det giver anledning til tre konkrete forbehold:</p>
+        <ul>
+          <li><strong>Afgrænsningen varierer over tid.</strong> Finansministeriet justerer løbende, om en given aftale tæller som forlig eller blot som stemmeaftale. Tal fra forskellige år er derfor ikke direkte sammenlignelige.</li>
+          <li><strong>Stemmeaftaler tæller ikke med.</strong> Aftaler hvor partierne blot forpligter sig til at stemme for et konkret lovforslag – uden den vedvarende gensidig bindende forpligtelse – indgår ikke i oversigten.</li>
+          <li><strong>Forlig bortfalder ved valg.</strong> Et forlig ophører, hvis de partier der bærer det, mister flertal i Folketinget efter et valg. Den nye regering vælger typisk, hvilke forlig den ønsker at videreføre.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section-eyebrow" style="margin-bottom:6px;">Antal gældende forlig over tid</div>
+    <div style="font-size:12px;color:var(--slate);margin-bottom:16px;">Baseret på FIU-svar til Finansudvalget · Lodrette streger markerer valg og regeringsskifter</div>
+    <div id="historik-chart-wrap"></div>
+
+    <div style="margin-top:28px;">
+      <div class="section-eyebrow" style="margin-bottom:12px;">Kildetabel</div>
+      <div id="historik-table"></div>
+    </div>
+
+    <div class="note" style="margin-top:24px;">
+      <strong>Forbehold:</strong> Tallene er ikke direkte sammenlignelige på tværs af år, da Finansministeriet løbende har justeret kriterierne for, hvad der tæller som et forlig. Tal markeret med * er estimerede ud fra indholdet i de respektive FIU-dokumenter. Bekræftede tal stammer enten direkte fra svarene eller fra offentlige kildehenvisninger.
+    </div>
+  </div>
+</main>
+  <span>Kilde: Finansministeriet · FIU Alm.del – endeligt svar på spørgsmål 2</span>
+  <span>1. oktober 2025</span>
+</footer>
+<div id="tooltip"></div>
+
+<script>
+// ─────────────────────────────────────────────────────────────────────
+// STATUS LOGIC
+// aktiv     = løbende / langt udløbsår
+// udlober   = udløber 2026–2027
+// udloebet  = udløbet (2025 eller tidligere)
+// opsagt    = eksplicit opsagt eller opsigelse varslet
+// ─────────────────────────────────────────────────────────────────────
+function computeStatus(expires, notes) {
+  const n = (notes||'').toLowerCase();
+  const isOpsagt = n.includes('opsagt') || n.includes('opsige') || n.includes('udtræder') || n.includes('udtrådt');
+  if (isOpsagt) return 'opsagt';
+  if (!expires || expires === '–') return 'aktiv';
+  // extract first year
+  const m = expires.match(/\d{4}/);
+  if (!m) return 'aktiv';
+  const yr = parseInt(m[1]);
+  if (yr <= 2025) return 'udloebet';
+  if (yr <= 2027) return 'udlober';
+  return 'aktiv';
+}
+
+const STATUS_LABEL = { aktiv:'Aktiv', udlober:'Udløber snart', udloebet:'Udløbet', opsagt:'Opsagt/varslet' };
+
+// ─────────────────────────────────────────────────────────────────────
+// DATA
+// ─────────────────────────────────────────────────────────────────────
+const A = [
+  {id:1,title:"Politisk aftale om dansk europapolitik i en globaliseret verden",year:2008,ministry:"Udenrigsministeriet",parties:["S","V","M","SF","LA","K","RV"],expires:"–",notes:"Aftalen gælder så længe som traktaten undertegnet i Lissabon d. 13. december 2007. M indtræder som følge af regeringsdannelse."},
+  {id:2,title:"Aftale om budgetlov",year:2012,ministry:"Finansministeriet",parties:["S","V","M","SF","K","RV"],expires:"–",notes:"M indtræder som følge af regeringsdannelse. I Nationalt kompromis om dansk sikkerhedspolitik (2022) blev aftalepartierne enige om at revidere budgetloven med henblik på at øge grænsen for det strukturelle underskud til 1,0 pct. af BNP. Politiske drøftelser herom i 2033."},
+  {id:3,title:"Aftale om rekapitalisering og statens ejerskab af SAS AB",year:2020,ministry:"Finansministeriet",parties:["S","V","M","SF","LA","K","EL","RV","DF","ALT","NB"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:4,title:"Aftale om DIS-ordningen",year:1988,ministry:"Erhvervsministeriet",parties:["S","V","M","LA","K","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:5,title:"Aftale om at fremme flere skibe under Dannebrog",year:2007,ministry:"Erhvervsministeriet",parties:["S","V","M","K","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:6,title:"Aftale om en styrkelse af konkurrencen",year:2007,ministry:"Erhvervsministeriet",parties:["S","V","M","K","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse. Forliget gælder alene delen vedr. konkurrenceloven."},
+  {id:7,title:"Aftale om særligt dækkede obligationer",year:2007,ministry:"Erhvervsministeriet",parties:["S","V","M","K","RV"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:8,title:"Aftaler om bankpakker (Bankpakke I–VI) inkl. ansvarlig aflønningspolitik i den finansielle sektor",year:2008,ministry:"Erhvervsministeriet",parties:["S","V","M","SF","LA","K","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse. SF og LA indtrådte i kredsen ifm. bankpakke II."},
+  {id:9,title:"Liberalisering af Lukkeloven",year:2010,ministry:"Erhvervsministeriet",parties:["S","V","M","LA","K","RV","DF"],expires:"–",notes:"Forliget er opsagt med virkning fra næste folketingsvalg ifm. aftale om ændring af Lukkeloven af 27. maj 2025. Regeringen, K, DF og RV er enige om at indgå et nyt forlig fra næste valg."},
+  {id:10,title:"Aftale om regulering af refinansieringsrisiko",year:2014,ministry:"Erhvervsministeriet",parties:["S","V","M","SF","LA","K","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:11,title:"Aftale om udvidelse af Stormflods- og oversvømmelsesordningen",year:2014,ministry:"Erhvervsministeriet",parties:["S","V","M","SF","LA","K","EL","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:12,title:"Aftale om modernisering af det offentlige forbrugerklagesystem",year:2014,ministry:"Erhvervsministeriet",parties:["S","V","M","K","RV"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:13,title:"Aftale om håndtering af danske kunder i Gable Insurance AG",year:2016,ministry:"Erhvervsministeriet",parties:["S","V","M","SF","LA","K","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:14,title:"Aftale om øget gennemsigtighed og mobilitet på realkreditmarkedet",year:2017,ministry:"Erhvervsministeriet",parties:["S","V","M","SF","LA","K","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:15,title:"Aftaler om en styrket indsats mod hvidvask mv. i den finansielle sektor",year:2017,ministry:"Erhvervsministeriet",parties:["S","V","M","SF","LA","K","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:16,title:"Aftale om styrkelse af indsatsen mod finansiel kriminalitet",year:2019,ministry:"Erhvervsministeriet",parties:["S","V","M","SF","LA","K","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:17,title:"Aftale om håndtering af kunder i Qudos Insurance A/S",year:2019,ministry:"Erhvervsministeriet",parties:["S","V","M","SF","LA","K","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:18,title:"Aftale om styrkelse af Dankortet",year:2025,ministry:"Erhvervsministeriet",parties:["S","V","M","SF","K","RV","DF"],expires:"–",notes:"–"},
+  {id:19,title:"Aftale om delvis liberalisering af spillemarkedet",year:2010,ministry:"Skatteministeriet",parties:["S","V","M","SF","LA","K","RV","DF"],expires:"–",notes:"Den del af forliget, der vedrører statens ejerskab af Danske Spil A/S samt afgiftsstrukturen og afgiftsniveauet, er opsagt. Aftalen justeret i december 2014, januar 2017 og juni 2018."},
+  {id:20,title:"Forlig om et nyt ejendomsvurderingssystem",year:2016,ministry:"Skatteministeriet",parties:["S","V","M","LA","K","RV"],expires:"–",notes:"M indtræder som følge af regeringsdannelse. DF er udtrådt af forliget."},
+  {id:21,title:"Forlig om Tryghed om boligbeskatningen",year:2017,ministry:"Skatteministeriet",parties:["S","V","M","LA","K","RV"],expires:"–",notes:"M indtræder som følge af regeringsdannelse. DF er udtrådt af forliget. Forliget justeret med aftale om kompensation til boligejerne (2020) og øget tryghed om erhvervsvurderinger (2023)."},
+  {id:22,title:"Flerårsaftale om skattevæsenets økonomi i 2023–2027",year:2023,ministry:"Skatteministeriet",parties:["S","V","M","SF","DD","LA","K","EL","RV","DF","ALT"],expires:"2027",notes:"–"},
+  {id:23,title:"Aftale om Danmarks tilknytning til Europol efter 1. maj 2017",year:2016,ministry:"Justitsministeriet",parties:["S","V","M","SF","LA","K","EL","RV","DF","ALT"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:24,title:"Aftale om Bandepakke III – Bander bag tremmer",year:2017,ministry:"Justitsministeriet",parties:["S","V","M","LA","K","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:25,title:"Aftale om en reform af indsatsen mod ungdomskriminalitet",year:2018,ministry:"Justitsministeriet",parties:["S","V","M","LA","K","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:26,title:"Aftale om politiets og anklagemyndighedens økonomi 2021–2023",year:2020,ministry:"Justitsministeriet",parties:["S","V","M","SF","K","EL","RV","DF","NB"],expires:"2025",notes:"V og M indtræder som følge af regeringsdannelse. Aftalen videreført i 2024 og 2025 med hhv. finansloven for 2024 og finansloven for 2025."},
+  {id:27,title:"Aftale om kriminalforsorgens økonomi 2023–2025",year:2023,ministry:"Justitsministeriet",parties:["S","V","M","SF","K","DF"],expires:"2025",notes:"–"},
+  {id:28,title:"Aftale om domstolenes økonomi 2024–2027",year:2024,ministry:"Justitsministeriet",parties:["S","V","M","SF","DD","LA","K","EL","RV","DF","ALT","NB"],expires:"2027",notes:"–"},
+  {id:29,title:"Aftale om dansk forsvar og sikkerhed 2024–2033",year:2023,ministry:"Forsvarsministeriet",parties:["S","V","M","SF","DD","LA","K","RV","DF","NB"],expires:"2033",notes:"Forliget omfatter principper vedr. værnepligt, EU, finansiering samt den økonomiske ramme. Udmøntes løbende ved delaftaler."},
+  {id:30,title:"Første delaftale under forsvarsforliget",year:2024,ministry:"Forsvarsministeriet",parties:["S","V","M","SF","DD","LA","K","RV","DF"],expires:"2033",notes:"–"},
+  {id:31,title:"Anden delaftale under forsvarsforliget",year:2024,ministry:"Forsvarsministeriet",parties:["S","V","M","SF","DD","LA","K","RV","DF"],expires:"2033",notes:"–"},
+  {id:32,title:"Aftale om fuld ligestilling i værnepligten under forsvarsforliget 2024–2033",year:2025,ministry:"Forsvarsministeriet",parties:["S","V","M","SF","LA","K","RV","DF"],expires:"2033",notes:"LA indtrådte i den eksisterende aftale. Aftalen justeret i marts 2025, så fuld ligestilling indføres fra 1. juli 2025."},
+  {id:33,title:"Aftale om den kommunale inddeling pr. 1. januar 2007",year:2005,ministry:"Indenrigs- og Sundhedsministeriet",parties:["S","V","M","K","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:34,title:"Aftale om en mere tidssvarende vederlæggelse af politikere",year:2014,ministry:"Indenrigs- og Sundhedsministeriet",parties:["S","V","M","SF","K","RV"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:35,title:"Aftale om øget åbenhed om den private økonomiske støtte til de politiske partier",year:2017,ministry:"Indenrigs- og Sundhedsministeriet",parties:["S","V","M","LA","K"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:36,title:"Forligsaftale om ny procedure for indsamling af vælgererklæringer",year:2019,ministry:"Indenrigs- og Sundhedsministeriet",parties:["S","V","M","SF","LA","K","EL","RV","DF","ALT"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:37,title:"Aftale om reform af det kommunale tilskuds- og udligningssystem",year:2020,ministry:"Indenrigs- og Sundhedsministeriet",parties:["S","V","M","SF","RV","ALT"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:38,title:"Aftale om forbud mod udenlandske donationer til politiske partier og kandidater",year:2025,ministry:"Indenrigs- og Sundhedsministeriet",parties:["S","V","M","DD","SF","K","EL","RV","ALT"],expires:"–",notes:"–"},
+  {id:39,title:"Aftale om at styrke RUT-registret",year:2009,ministry:"Beskæftigelsesministeriet",parties:["S","V","M","SF","K","RV"],expires:"–",notes:"M indtræder som følge af regeringsdannelse. Justeret med initiativerne i aftale om en reform af beskæftigelsesindsatsen af 9. april 2025."},
+  {id:40,title:"Aftale om en reform af førtidspension og fleksjob",year:2012,ministry:"Beskæftigelsesministeriet",parties:["S","V","M","SF","LA","K","RV"],expires:"–",notes:"M indtræder som følge af regeringsdannelse. Forligskredsen har indgået Aftale om bedre ressourceforløb (2020)."},
+  {id:41,title:"Forlig om en reform af sygedagpengesystemet",year:2013,ministry:"Beskæftigelsesministeriet",parties:["S","V","M","SF","LA","K","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse. Den del af aftalen, der vedrører den statslige driftsrefusion for sygedagpengemodtagere, er opsagt. Forligskredsen har indgået Aftale om målretning og forenkling i sygedagpengesystemet (2024)."},
+  {id:42,title:"Forlig om levetidsindeksering af folkepensionsalderen",year:2015,ministry:"Beskæftigelsesministeriet",parties:["S","V","M","K","RV"],expires:"–",notes:"M indtræder som følge af regeringsdannelse. DF stemte imod forhøjelsen til 70 år og udtræder af forliget."},
+  {id:43,title:"Aftale om et tryggere dagpengesystem",year:2015,ministry:"Beskæftigelsesministeriet",parties:["S","V","M","LA","K","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse. Den 7. marts 2022 opsagde regeringen (S) med øvrige partiers accept dele af dagpengeforliget vedr. dimittenders sats, dagpengeperiode og adgang til dagpenge på dimittendvilkår."},
+  {id:44,title:"Aftale om ny regulering af folkepensionen og indførelse af obligatorisk opsparing for overførselsmodtagere",year:2018,ministry:"Beskæftigelsesministeriet",parties:["S","V","M","SF","LA","K","RV","DF","ALT"],expires:"–",notes:"M indtræder som følge af regeringsdannelse. Relateret til Aftale om finansloven for 2019. Regeringen (SVM) har meddelt forligskredsen pr. 12. januar 2024, at de ønsker at opsige forliget med virkning fra efter næstkommende valg."},
+  {id:45,title:"Aftale om ret til seniorpension for nedslidte",year:2019,ministry:"Beskæftigelsesministeriet",parties:["S","V","M","LA","K","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:46,title:"Aftale om en fremtidssikret arbejdsmiljøindsats og indsats mod social dumping",year:2023,ministry:"Beskæftigelsesministeriet",parties:["S","V","M","SF","DD","LA","K","EL","RV","DF","ALT","NB"],expires:"2026",notes:"–"},
+  {id:47,title:"Aftale om Nyt kontanthjælpssystem – flere i arbejde, enklere regler og færre børn i lavindkomst",year:2023,ministry:"Beskæftigelsesministeriet",parties:["S","V","M","SF","K","RV"],expires:"–",notes:"Justeret med initiativerne i aftale om en reform af beskæftigelsesindsatsen af 9. april 2025."},
+  {id:48,title:"Aftale om reform af forskningsrådssystemet",year:2002,ministry:"Uddannelses- og Forskningsministeriet",parties:["S","V","M","SF","LA","K","EL","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:49,title:"Aftale om professionshøjskoler for videregående uddannelser",year:2007,ministry:"Uddannelses- og Forskningsministeriet",parties:["S","V","M","K","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:50,title:"Aftale om opfølgning på evaluering af Erhvervsakademistrukturen",year:2013,ministry:"Uddannelses- og Forskningsministeriet",parties:["S","V","M","SF","K","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:51,title:"Aftale om reform af SU-systemet og rammerne for studiegennemførelse",year:2013,ministry:"Uddannelses- og Forskningsministeriet",parties:["S","V","M","SF","LA","K","RV","DF"],expires:"–",notes:"V og M indtræder som følge af regeringsdannelse. Regeringen (SVM) har meddelt forligskredsen, at forliget opsiges med virkning efter næste valg som følge af aftale om ny SU-reform."},
+  {id:52,title:"Aftale om forbedrede vilkår for rekruttering af højtkvalificeret arbejdskraft til ESS",year:2016,ministry:"Uddannelses- og Forskningsministeriet",parties:["S","V","M","SF","LA","K","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:53,title:"Aftale om reform af læreruddannelsen",year:2022,ministry:"Uddannelses- og Forskningsministeriet",parties:["S","V","M","SF","K","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:54,title:"Aftale om rammerne for reform af universitetsuddannelserne i Danmark",year:2023,ministry:"Uddannelses- og Forskningsministeriet",parties:["S","V","M","SF","DD","LA","K"],expires:"–",notes:"Forligsbelagte elementer: struktur for nyt kandidatuddannelseslandskab, indfasning af nye uddannelsestyper, nyt kandidattillægsbevis, omlægningsgraden af pladser og fremrykket studiestart."},
+  {id:55,title:"Aftale om reform af professions- og erhvervsakademiuddannelser i Danmark",year:2025,ministry:"Uddannelses- og Forskningsministeriet",parties:["S","V","M","DD","SF","LA","K","DF","EL","ALT"],expires:"–",notes:"Forligsbelagte elementer: ny struktur på erhvervsakademiuddannelsesområdet, udfasning af top-up-uddannelser, nye overbygningsuddannelser og ny praksisrettet professionsmasteruddannelse på 75 ECTS."},
+  {id:56,title:"Aftale om 10. klasse",year:2006,ministry:"Børne- og Undervisningsministeriet",parties:["S","V","M","SF","K","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse. Regeringen har opsagt forliget med virkning fra næste valg ifm. aftale om ny erhvervs- og professionsrettet gymnasieuddannelse fra 17. februar 2025."},
+  {id:57,title:"Aftale om fornyelse af folkeskoleloven",year:2003,ministry:"Børne- og Undervisningsministeriet",parties:["S","V","M","LA","K","RV","DF"],expires:"–",notes:"SF er udtrådt af forliget efter valget den 1. november 2022. M indtræder som følge af regeringsdannelse. Forliget fornyet den 19. marts 2024 med Aftale om folkeskolens kvalitetsprogram."},
+  {id:58,title:"Aftale om styrkede gymnasiale uddannelser",year:2016,ministry:"Børne- og Undervisningsministeriet",parties:["S","V","M","SF","LA","K","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse. Regeringen har opsagt forliget med virkning fra næste valg ifm. aftale om ny erhvervs- og professionsrettet gymnasieuddannelse fra 17. februar 2025."},
+  {id:59,title:"Aftale om en ny erhvervs- og professionsrettet gymnasieuddannelse",year:2025,ministry:"Børne- og Undervisningsministeriet",parties:["S","V","M","SF","DF"],expires:"–",notes:"Etablerer et nyt gymnasieforlig med overordnede rammer for en reform af gymnasieuddannelserne samt lov om de gymnasiale uddannelser."},
+  {id:60,title:"Aftale om fuld liberalisering af det danskbogmarked",year:2009,ministry:"Kulturministeriet",parties:["S","V","M","SF","LA","K","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:61,title:"Aftale om reform af kunststøttesystemet",year:2012,ministry:"Kulturministeriet",parties:["S","V","M","SF","LA","K","EL","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:62,title:"Aftale om reform af de livsvarige ydelser",year:2012,ministry:"Kulturministeriet",parties:["S","V","M","SF","K","EL","RV"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:63,title:"Medieaftale for 2023–2026: Samling om frie medier og stærkt dansk indhold",year:2023,ministry:"Kulturministeriet",parties:["S","V","M","SF","EL","RV","DF"],expires:"2026",notes:"–"},
+  {id:64,title:"Filmaftale for 2024–2027: En stærk filmnation",year:2023,ministry:"Kulturministeriet",parties:["S","V","M","SF","K","EL","DF","ALT"],expires:"2027",notes:"–"},
+  {id:65,title:"Aftale om Det Kongelige Teater 2025–2028",year:2024,ministry:"Kulturministeriet",parties:["S","V","M","DD","SF","LA","K","EL","DF","RV","ALT"],expires:"2028",notes:"–"},
+  {id:66,title:"Aftale om Danmark i bedre balance",year:2016,ministry:"By-, Land- og Kirkeministeriet",parties:["S","V","M","K","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse. LA er med fsva. ændringer foretaget under VLAK-regeringen 2016-2019."},
+  {id:67,title:"Aftale om opfølgning på evaluering af planloven mv.",year:2022,ministry:"By-, Land- og Kirkeministeriet",parties:["S","V","M","K","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse. LA med fsva. ændringer foretaget under VLAK-regeringen 2016-2019."},
+  {id:68,title:"Vækst og udvikling i landdistrikterne gennem ændring af planloven mv.",year:2024,ministry:"By-, Land- og Kirkeministeriet",parties:["S","V","M","K","DF"],expires:"–",notes:"LA med fsva. ændringer foretaget under VLAK-regeringen 2016-2019 (initiativet om planlovens regler om klimatilpasning)."},
+  {id:69,title:"Aftale om nationalparker",year:2007,ministry:"Miljø- og Ligestillingsministeriet",parties:["S","V","M","SF","LA","K","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:70,title:"Aftale om grøn omstilling af dansk landbrug",year:2021,ministry:"Ministeriet for Grøn Trepart",parties:["S","V","M","SF","LA","K","EL","RV","DF","NB"],expires:"2030",notes:"M indtræder som følge af regeringsdannelse. Aftalepartierne er enige om at opsige forliget med virkning fra næste valg som følge af aftale om implementering af et Grønt Danmark (2024)."},
+  {id:71,title:"Aftale om implementering af et Grønt Danmark",year:2024,ministry:"Ministeriet for Grøn Trepart",parties:["S","V","M","SF","LA","K","RV"],expires:"2030–2032",notes:"Forligsbelagte dele: CO2e-afgift på husdyr frem til 2032; reduktionsmål på 55-65 pct. i 2030; tidspunkt for vandrammedirektivets målindfrielse; indfasning og niveau for miljøgaranti frem til 2030."},
+  {id:72,title:"Aftale om Vækstplan for digitalisering i Danmark",year:2015,ministry:"Digitaliseringsministeriet",parties:["S","V","M","SF","LA","K","EL","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:73,title:"Aftale om en robust og fremtidssikret digital infrastruktur i hele Danmark",year:2025,ministry:"Digitaliseringsministeriet",parties:["S","V","M","DD","SF","LA","K","EL","RV","DF","ALT"],expires:"2030",notes:"Aftalen løber frem til og med 2030. Aftalepartierne drøfter behovet for justeringer halvvejs i aftaleperioden i 2027."},
+  {id:74,title:"Aftale om Metrocityringen",year:2006,ministry:"Transportministeriet",parties:["S","V","M","SF","K","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:75,title:"Aftale om en fast forbindelse over Femern Bælt",year:2008,ministry:"Transportministeriet",parties:["S","V","M","SF","LA","K","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:76,title:"Aftale om en grøn transportpolitik",year:2009,ministry:"Transportministeriet",parties:["S","V","M","SF","LA","K","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:77,title:"Aftale om den fremtidige færgebetjening af Bornholm og tillægsaftale",year:2014,ministry:"Transportministeriet",parties:["S","V","M","SF","K","RV","DF"],expires:"2030",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:78,title:"Genudbud af togtrafikken i Midt- og Vestjylland m.v.",year:2017,ministry:"Transportministeriet",parties:["S","V","M","SF","LA","K","RV","DF","ALT"],expires:"2028 (option op til 2 år)",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:79,title:"Igangsættelse af udbudsproces for indkøb af nye eltog (Fremtidens Tog)",year:2018,ministry:"Transportministeriet",parties:["S","V","M","SF","LA","K","RV","DF","ALT"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:80,title:"Igangsættelse af udbudsproces for indkøb af nye vogne og el-lokomotiver",year:2018,ministry:"Transportministeriet",parties:["S","V","M","SF","LA","K","EL","RV","DF","ALT"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:81,title:"Aftale om Infrastrukturplan 2035",year:2021,ministry:"Transportministeriet",parties:["S","V","M","SF","LA","K","EL","RV","DF","ALT"],expires:"2035",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:82,title:"Aftale om Infrastrukturplan 2035 (Fremtidens Veje)",year:2021,ministry:"Transportministeriet",parties:["S","V","M","SF","LA","K","RV","DF"],expires:"2035",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:83,title:"Aftale om den fremtidige biomasseudbygning",year:1993,ministry:"Klima-, Energi- og Forsyningsministeriet",parties:["S","V","M","SF","LA","K","RV"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:84,title:"Aftale om elreformen",year:1999,ministry:"Klima-, Energi- og Forsyningsministeriet",parties:["S","V","M","SF","LA","K","RV"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:85,title:"Reformopfølgning af 22. marts 2000",year:2000,ministry:"Klima-, Energi- og Forsyningsministeriet",parties:["S","V","M","SF","LA","K","RV"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:86,title:"Aftale om naturgasforsyning og energibesparelser",year:2001,ministry:"Klima-, Energi- og Forsyningsministeriet",parties:["S","V","M","SF","K","RV"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:87,title:"Aftale om kulbrinteskattelov som led i Nordsøaftale",year:2003,ministry:"Klima-, Energi- og Forsyningsministeriet",parties:["S","V","M","SF","K","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:88,title:"Aftale om kompensationsordning som led i Nordsøaftale",year:2003,ministry:"Klima-, Energi- og Forsyningsministeriet",parties:["S","V","M","SF","K","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:89,title:"Aftale om udviklingen af det danske energimarked og en styrkelse af nye energiteknologier",year:2003,ministry:"Klima-, Energi- og Forsyningsministeriet",parties:["S","V","M","SF","K","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:90,title:"Aftale om fremtidssikring af energiinfrastrukturen",year:2004,ministry:"Klima-, Energi- og Forsyningsministeriet",parties:["S","V","M","SF","LA","K","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:91,title:"Aftale om vindenergi og decentral kraftvarme mv.",year:2004,ministry:"Klima-, Energi- og Forsyningsministeriet",parties:["S","V","M","SF","LA","K","RV"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:92,title:"Organisering af affaldssektoren (suppleret ved Aftale om genbrugspladser 2011)",year:2007,ministry:"Klima-, Energi- og Forsyningsministeriet",parties:["S","V","M","SF","K","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:93,title:"Forlig om vandsektoren",year:2007,ministry:"Klima-, Energi- og Forsyningsministeriet",parties:["S","V","M","SF","LA","K","EL","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:94,title:"Aftaler om solcelleanlæg 2012–2013",year:2012,ministry:"Klima-, Energi- og Forsyningsministeriet",parties:["S","V","M","SF","LA","K","EL","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse. Aftaler indgået 15. november 2012, 19. marts 2013 og 11. juni 2013 om støtte til solcelleanlæg."},
+  {id:95,title:"Aftale om ny og forbedret regulering af den danske vandsektor",year:2015,ministry:"Klima-, Energi- og Forsyningsministeriet",parties:["S","V","M","SF","LA","K","EL","RV","DF"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:96,title:"Energiaftale",year:2018,ministry:"Klima-, Energi- og Forsyningsministeriet",parties:["S","V","M","SF","LA","K","EL","RV","DF","ALT"],expires:"2024",notes:"M indtræder som følge af regeringsdannelse. Parterne er enige om, at aftalen gælder for perioden 2020-24, hvorefter aftalens forligsbindinger betragtes som udløbet."},
+  {id:97,title:"Aftale om klimalov",year:2019,ministry:"Klima-, Energi- og Forsyningsministeriet",parties:["S","V","M","SF","K","EL","DF","RV","ALT"],expires:"–",notes:"M indtræder som følge af regeringsdannelse. Dansk Folkeparti har i juni 2024 meddelt KEFM, at partiet ønsker at udtræde af klimalovforliget."},
+  {id:98,title:"Klimaaftale for energi og industri mv. – støtteudbud til biogas og andre grønne gasser",year:2020,ministry:"Klima-, Energi- og Forsyningsministeriet",parties:["S","V","M","SF","LA","K","EL","DF","RV","ALT"],expires:"–",notes:"M indtræder som følge af regeringsdannelse. Partierne var enige om, at aftalens forligsbindinger udløb efter 2024. Udbuddene er imidlertid udskudt, og det vurderes, at afholdelsen af udbuddene samt de afsatte midler frem til 2030 fortsat er omfattet af forliget."},
+  {id:99,title:"Aftale om Klimaplan for en grøn affaldssektor og cirkulær økonomi, kap. IV og V",year:2020,ministry:"Klima-, Energi- og Forsyningsministeriet",parties:["S","V","M","SF","RV"],expires:"–",notes:"M indtræder som følge af regeringsdannelse. K, ALT og LA er siden udtrådt af forliget. Kun kap. IV og V er omfattet af forlig."},
+  {id:100,title:"Aftale om fremtiden for olie- og gasindvinding i Nordsøen",year:2020,ministry:"Klima-, Energi- og Forsyningsministeriet",parties:["S","V","M","SF","K","DF","RV"],expires:"–",notes:"M indtræder som følge af regeringsdannelse. Forligsbelagte elementer: 2050-slutdato samt bevarelse af mulighed for minirunder, naboblokprocedurer og kriterierne i undergrundsloven."},
+  {id:101,title:"Klimaaftale om grøn strøm og varme 2022 – Danmark kan mere II",year:2022,ministry:"Klima-, Energi- og Forsyningsministeriet",parties:["S","V","M","SF","LA","K","EL","RV","DF","ALT"],expires:"2024 (grøn strøm) / 2028 (grøn varme)",notes:"M indtræder som følge af regeringsdannelse. Delaftale om grøn strøm: omplacering af park fra Energiaftale 2018 og udbud af 4 GW havvind er forligsbelagte (udløbet 2024). Delaftale om grøn varme: dele af afsnit 3 og 4 om ny økonomisk regulering af fjernvarme er forligsbelagte frem til 2028."},
+  {id:102,title:"Aftale om Selskabsgørelse af kommunernes levering af affaldsydelser",year:2022,ministry:"Klima-, Energi- og Forsyningsministeriet",parties:["S","V","M","SF","LA","K","RV","ALT"],expires:"–",notes:"M indtræder som følge af regeringsdannelse."},
+  {id:103,title:"Aftale om grøn skattereform for industri mv., CCS-pulje",year:2022,ministry:"Klima-, Energi- og Forsyningsministeriet",parties:["S","V","M","SF","K","RV"],expires:"–",notes:"M indtræder som følge af regeringsdannelse. CCS-puljen er eneste del af grøn skattereform for industri mv. (2022), der er forligsbelagt."},
+  {id:104,title:"Opfølgende aftale om Klimaplan for en grøn affaldssektor og cirkulær økonomi, kap. III",year:2022,ministry:"Klima-, Energi- og Forsyningsministeriet",parties:["S","V","M","SF","RV"],expires:"–",notes:"M indtræder som følge af regeringsdannelse. K, ALT og LA er efterfølgende udtrådt af forliget. Kun kap. III er forligsbelagt."},
+  {id:105,title:"Tillægsaftale om udbudsrammer for 6 GW havvind og Energiø Bornholm",year:2023,ministry:"Klima-, Energi- og Forsyningsministeriet",parties:["S","V","M","SF","LA","K","EL","RV","DF","ALT"],expires:"2030 (Energiø Bornholm)",notes:"Aftaleelementer fsva. 6 GW havvind er opsagt ifm. beslutning om at annullere de sidste tre udbud. Aftaleelementer fsva. Energiø Bornholm er fortsat gældende for 2023-30. DF udtrådt i november 2024."},
+  {id:106,title:"Opfølgende aftale ifm. klimaaftale om grøn strøm og varme 2022 og Rigsrevisionens beretning om tilsyn med aftaler i forsyningssektoren",year:2024,ministry:"Klima-, Energi- og Forsyningsministeriet",parties:["S","V","M","SF","LA","K","EL","RV","DF","ALT"],expires:"2028",notes:"Forligsbelagte dele: opfølgning på bedre vilkår for investering i og udrulning af grøn fjernvarme samt øget forbrugerbeskyttelse."},
+  {id:107,title:"Aftale om udbudsrammer for tre havvindmølleparker",year:2025,ministry:"Klima-, Energi- og Forsyningsministeriet",parties:["S","V","M","DD","SF","K","EL","RV","ALT"],expires:"2040",notes:"Forligsbelagte dele: støtte via 2-sidet kapabilitetsbaseret CfD med udbetalingsloft på 55,2 mia. kr. samt finansiering svarende til 27,6 mia. kr."},
+].map(a=>({...a, status: computeStatus(a.expires, a.notes)}));
+
+const ministryOrder=["Klima-, Energi- og Forsyningsministeriet","Erhvervsministeriet","Beskæftigelsesministeriet","Transportministeriet","Uddannelses- og Forskningsministeriet","Justitsministeriet","Indenrigs- og Sundhedsministeriet","Kulturministeriet","Skatteministeriet","Forsvarsministeriet","Børne- og Undervisningsministeriet","By-, Land- og Kirkeministeriet","Finansministeriet","Ministeriet for Grøn Trepart","Digitaliseringsministeriet","Udenrigsministeriet","Miljø- og Ligestillingsministeriet"];
+const parties=[{abbr:"S",name:"Socialdemokratiet",tier:1},{abbr:"V",name:"Venstre",tier:1},{abbr:"M",name:"Moderaterne",tier:1},{abbr:"K",name:"Det Konservative Folkeparti",tier:1},{abbr:"RV",name:"Radikale Venstre",tier:2},{abbr:"SF",name:"SF – Socialistisk Folkeparti",tier:2},{abbr:"DF",name:"Dansk Folkeparti",tier:2},{abbr:"LA",name:"Liberal Alliance",tier:2},{abbr:"EL",name:"Enhedslisten",tier:3},{abbr:"ALT",name:"Alternativet (inkl. Å)",tier:3},{abbr:"DD",name:"Danmarksdemokraterne",tier:4},{abbr:"NB",name:"Nye Borgerlige",tier:4}];
+
+// ── MINISTRY URLS (løsning 1) ─────────────────────────────
+const MINISTRY_URLS = {
+  "Udenrigsministeriet":                      "https://um.dk/udenrigspolitik/",
+  "Finansministeriet":                        "https://www.fm.dk/nyheder/",
+  "Erhvervsministeriet":                      "https://www.em.dk/aktuelt/udgivelser-og-aftaler",
+  "Skatteministeriet":                        "https://skm.dk/aktuelt/publikationer/politiske-udspil-og-aftaler",
+  "Justitsministeriet":                       "https://www.justitsministeriet.dk/pressemeddelelse/",
+  "Forsvarsministeriet":                      "https://www.fmn.dk/da/arbejdsomraader/forlig-og-okonomi/",
+  "Indenrigs- og Sundhedsministeriet":        "https://www.ism.dk/",
+  "Beskæftigelsesministeriet":                "https://bm.dk/arbejdsomraader/politiske-aftaler/politiske-aftaler",
+  "Uddannelses- og Forskningsministeriet":    "https://ufm.dk/lovstof/politiske-aftaler",
+  "Børne- og Undervisningsministeriet":       "https://www.uvm.dk/",
+  "Kulturministeriet":                        "https://kum.dk/aktuelt/politiske-aftaler",
+  "By-, Land- og Kirkeministeriet":           "https://www.blkm.dk/",
+  "Miljø- og Ligestillingsministeriet":       "https://www.mim.dk/",
+  "Ministeriet for Grøn Trepart":             "https://mgtp.dk/",
+  "Digitaliseringsministeriet":               "https://www.digmin.dk/digitalisering/politiske-aftaler",
+  "Transportministeriet":                     "https://trm.dk/politiske-aftaler/",
+  "Klima-, Energi- og Forsyningsministeriet": "https://www.kefm.dk/aftaler",
+};
+
+// ── GOOGLE SEARCH LINK (løsning 2) ───────────────────────
+function googleSearchUrl(title) {
+  const q = encodeURIComponent('"' + title + '" site:regeringen.dk OR site:fm.dk OR site:ft.dk');
+  return 'https://www.google.com/search?q=' + q;
+}
+
+// ── STATE ─────────────────────────────────────────────────
+let currentOverview='ministerier';
+let globalStatusFilter='alle';
+let detailStatusFilter={md:'alle', pd:'alle'};
+let currentDetailData={md:[], pd:[]};
+
+// ── STATUS COUNTS ─────────────────────────────────────────
+function updateStatusCounts(pool) {
+  const all=pool||A;
+  document.getElementById('fc-alle').textContent=all.length;
+  ['aktiv','udlober','udloebet','opsagt'].forEach(s=>{
+    document.getElementById('fc-'+s).textContent=all.filter(a=>a.status===s).length;
+  });
+}
+
+// ── TOOLTIP ───────────────────────────────────────────────
+const ttEl=document.getElementById('tooltip');
+let ttVisible=false,ttTO;
+function showTT(e,a){
+  clearTimeout(ttTO);
+  ttEl.innerHTML=`<div class="tt-label">Udløbsår</div><div class="tt-val tt-expires">${a.expires}</div><div class="tt-divider"></div><div class="tt-label">Bemærkninger</div><div class="tt-val">${a.notes}</div>`;
+  posTT(e); ttEl.classList.add('visible'); ttVisible=true;
+}
+function hideTT(){ttTO=setTimeout(()=>{ttEl.classList.remove('visible');ttVisible=false;},120);}
+function posTT(e){
+  const x=e.clientX,y=e.clientY,w=ttEl.offsetWidth||340,h=ttEl.offsetHeight||120,vw=window.innerWidth,vh=window.innerHeight;
+  let left=x+14,top=y-10;
+  if(left+w>vw-12)left=x-w-14;
+  if(top+h>vh-12)top=vh-h-12;
+  if(top<8)top=8;
+  ttEl.style.left=left+'px';ttEl.style.top=top+'px';
+}
+document.addEventListener('mousemove',e=>{if(ttVisible)posTT(e);});
+
+// ── BUILD STATUS BADGE ────────────────────────────────────
+function badge(status){return `<span class="status-badge ${status}">${STATUS_LABEL[status]}</span>`;}
+
+// ── BUILD AGREEMENT ROW ───────────────────────────────────
+function buildRelations(id) {
+  const rels = RELATIONS[id];
+  if (!rels || !rels.length) return '';
+  const tags = rels.map(r => {
+    const cls = `rel-${r.type}`;
+    const typeLabel = {justerer:'Justerer',erstatter:'Erstatter',delaftale:'Delaftale under',relateret:'Relateret til',viderefoerer:'Videreføres af',opsagt:'Opsagt'}[r.type]||r.type;
+    const onclick = r.targetId ? `openAgreementById(${r.targetId})` : '';
+    return `<span class="rel-tag ${cls}" ${r.targetId?`onclick="${onclick}" title="Gå til forlig #${r.targetId}"`:'title="'+r.label+'"'}>
+      <span class="rel-label">${typeLabel}:</span> ${r.label}
+    </span>`;
+  }).join('');
+  return `<div class="ar-relations">${tags}</div>`;
+}
+
+function buildTimeline(id, year) {
+  const tl = TIMELINES[id];
+  if (!tl || !tl.length) return '';
+  // Always start with indgået if not explicitly set
+  const items = tl;
+  const dots = items.map((t,i) => `
+    <div class="tl-item">
+      <div class="tl-dot ${t.type}"></div>
+      <div class="tl-yr">${t.year}</div>
+      <div class="tl-lbl">${t.label}</div>
+    </div>`).join('');
+  return `<div class="ar-timeline">${dots}</div>`;
+}
+
+function buildRow(a,hlParty,idx){
+  const row=document.createElement('div');
+  row.className='agreement-row';
+  row.dataset.status=a.status;
+  row.dataset.id=a.id;
+  row.style.animationDelay=Math.min(idx*20,300)+'ms';
+  const chips=a.parties.map(p=>`<span class="chip${p===hlParty?' hl':''}">${p}</span>`).join('');
+  const searchIcon = `<a class="ar-search-link" href="${googleSearchUrl(a.title)}" target="_blank" rel="noopener" title="Søg efter aftaleteksten på regeringen.dk og ft.dk" onclick="event.stopPropagation()">
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    Søg aftale
+  </a>`;
+  const om = getOmraade(a.ministry);
+  const br = getBreadth(a.parties);
+  const relations = buildRelations(a.id);
+  const timeline = buildTimeline(a.id, a.year);
+  row.innerHTML=`
+    <div class="ar-top">
+      <div class="ar-title-wrap">
+        <span class="ar-title">${a.title}</span>
+        ${badge(a.status)}
+      </div>
+      <div class="ar-meta">
+        <span class="ar-year">${a.year}</span>
+        ${searchIcon}
+        <i class="ar-info-icon" title="Hover for detaljer">i</i>
+      </div>
+    </div>
+    <div class="chips" style="margin-bottom:6px">
+      <span class="omrade-tag ${om.cls}">${om.label}</span>
+      <span class="breadth-badge ${br.cls}">${a.parties.length} parter · ${br.label}</span>
+    </div>
+    <div class="chips">${chips}</div>
+    ${timeline}
+    ${relations}`;
+  row.addEventListener('mouseenter',e=>showTT(e,a));
+  row.addEventListener('mouseleave',hideTT);
+  return row;
+}
+
+// ── NAVIGATE TO AGREEMENT BY ID ───────────────────────────
+function openAgreementById(id) {
+  const a = A.find(x => x.id === id);
+  if (!a) return;
+  openMinistryDetail(a.ministry);
+  // Scroll to the specific row after render
+  setTimeout(() => {
+    const el = document.querySelector(`.agreement-row[data-id="${id}"]`);
+    if (el) { el.scrollIntoView({behavior:'smooth', block:'center'}); el.style.outline='2px solid var(--red)'; setTimeout(()=>el.style.outline='',1500); }
+  }, 400);
+}
+
+// ── OVERVIEW: MINISTRIES ──────────────────────────────────
+const MAX_M=25, MAX_P=107;
+function ministryCounts(pool){const c={};(pool||A).forEach(a=>{c[a.ministry]=(c[a.ministry]||0)+1;});return c;}
+function partyCount(abbr,pool){return (pool||A).filter(a=>a.parties.includes(abbr)).length;}
+
+function buildMinistryOverview(){
+  const pool=getFilteredPool();
+  const counts=ministryCounts(pool);
+  const list=document.getElementById('ministry-list');list.innerHTML='';
+  ministryOrder.forEach((m,i)=>{
+    const n=counts[m]||0;
+    const row=document.createElement('div');
+    row.className='ministry-row';
+    row.style.animationDelay=(i*25)+'ms';
+    row.innerHTML=`<div class="mr-name">${m}<span class="mr-arrow">→</span></div><div class="bar-track"><div class="bar-fill${n>=9?' top':''}" data-w="${(n/MAX_M*100).toFixed(1)}%"></div></div><div class="bar-count">${n}</div>`;
+    row.onclick=()=>openMinistryDetail(m);
+    list.appendChild(row);
+  });
+  updateStatusCounts();
+  triggerBars();
+}
+
+function buildPartyOverview(){
+  const pool=getFilteredPool();
+  const grid=document.getElementById('party-grid');grid.innerHTML='';
+  parties.forEach((p,i)=>{
+    const n=partyCount(p.abbr,pool);
+    const pct=(n/MAX_P*100).toFixed(0);
+    const card=document.createElement('div');
+    card.className=`party-card tier${p.tier}`;
+    card.style.animationDelay=(i*25)+'ms';
+    card.innerHTML=`<div class="pc-topbar"></div><div class="pc-abbr">${p.abbr}</div><div class="pc-name">${p.name}</div><div class="pc-count">${n}</div><div class="pc-bar-track"><div class="pc-bar-fill" data-w="${pct}%"></div></div><div class="pc-pct">${n} ud af 107 · ${pct}%</div>`;
+    card.onclick=()=>openPartyDetail(p.abbr,p.name);
+    grid.appendChild(card);
+  });
+  triggerBars();
+}
+
+// ── DETAIL STATUS FILTER ──────────────────────────────────
+function buildDetailStatusFilter(containerId, pool, detailKey, onFilter) {
+  const wrap=document.getElementById(containerId);
+  wrap.innerHTML='<span class="sf-label">Filter:</span>';
+  const statuses=['alle','aktiv','udlober','udloebet','opsagt'];
+  statuses.forEach(s=>{
+    const count=s==='alle'?pool.length:pool.filter(a=>a.status===s).length;
+    if(s!=='alle'&&count===0)return;
+    const chip=document.createElement('span');
+    chip.className='sf-chip'+(detailStatusFilter[detailKey]===s?'':' inactive');
+    chip.dataset.status=s;
+    chip.innerHTML=s==='alle'?`Alle <span class="sf-count">${count}</span>`:`${STATUS_LABEL[s]} <span class="sf-count">${count}</span>`;
+    chip.onclick=()=>{
+      detailStatusFilter[detailKey]=s;
+      wrap.querySelectorAll('.sf-chip').forEach(c=>c.classList.add('inactive'));
+      chip.classList.remove('inactive');
+      onFilter(s);
+    };
+    wrap.appendChild(chip);
+  });
+}
+
+function applyDetailFilter(listId, pool, filterStatus) {
+  const el=document.getElementById(listId);
+  el.innerHTML='';
+  const filtered=filterStatus==='alle'?pool:pool.filter(a=>a.status===filterStatus);
+  filtered.forEach((a,i)=>el.appendChild(buildRow(a,null,i)));
+}
+
+function applyPartyDetailFilter(listId, pool, hlParty, filterStatus) {
+  const el=document.getElementById(listId);
+  el.innerHTML='';
+  const filtered=filterStatus==='alle'?pool:pool.filter(a=>a.status===filterStatus);
+  filtered.forEach((a,i)=>el.appendChild(buildRow(a,hlParty,i)));
+}
+
+// ── MINISTRY DETAIL ───────────────────────────────────────
+function openMinistryDetail(ministry){
+  const pool=A.filter(a=>a.ministry===ministry).sort((a,b)=>a.year-b.year);
+  currentDetailData.md=pool;
+  detailStatusFilter.md='alle';
+  detailViewMode.md='cards';
+  // Reset toggle
+  document.querySelectorAll('#panel-ministry-detail .vt-btn').forEach((b,i)=>{b.classList.toggle('active',i===0);});
+  document.getElementById('md-title').textContent=ministry;
+  const url = MINISTRY_URLS[ministry];
+  const linkHtml = url ? `<a class="ministry-ext-link" href="${url}" target="_blank" rel="noopener"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>Se aftaler på ${new URL(url).hostname.replace('www.','')}</a>` : '';
+  document.getElementById('md-sub').innerHTML=`${pool.length} forlig i alt ${linkHtml}`;
+  document.getElementById('md-badge').innerHTML=`${pool.length}<small>forlig</small>`;
+  buildDetailStatusFilter('md-status-row',pool,'md',(s)=>applyDetailFilter('md-list',pool,s));
+  applyDetailFilter('md-list',pool,'alle');
+  showPanel('ministry-detail','Ministerier',ministry);
+}
+
+// ── PARTY DETAIL ──────────────────────────────────────────
+function openPartyDetail(abbr,name){
+  const pool=A.filter(a=>a.parties.includes(abbr)).sort((a,b)=>a.year-b.year);
+  currentDetailData.pd=pool;
+  currentDetailData.pdParty=abbr;
+  detailStatusFilter.pd='alle';
+  detailViewMode.pd='cards';
+  document.querySelectorAll('#panel-party-detail .vt-btn').forEach((b,i)=>{b.classList.toggle('active',i===0);});
+  document.getElementById('pd-title').textContent=`${abbr} – ${name}`;
+  document.getElementById('pd-sub').textContent=`${pool.length} forlig ud af 107 (${(pool.length/107*100).toFixed(0)}%)`;
+  document.getElementById('pd-badge').innerHTML=`${pool.length}<small>forlig</small>`;
+  buildDetailStatusFilter('pd-status-row',pool,'pd',(s)=>applyPartyDetailFilter('pd-list',pool,abbr,s));
+  applyPartyDetailFilter('pd-list',pool,abbr,'alle');
+  showPanel('party-detail','Partier',`${abbr} – ${name}`);
+}
+
+// ── SEARCH ────────────────────────────────────────────────
+let searchQuery='';
+function onSearch(val){
+  searchQuery=val.trim().toLowerCase();
+  document.getElementById('search-clear').classList.toggle('visible',val.length>0);
+  if(!searchQuery){
+    clearSearch(); return;
+  }
+  const tabSearch=document.getElementById('tab-search');
+  tabSearch.style.display='';
+  showOverviewByName('search');
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  tabSearch.classList.add('active');
+  renderSearch();
+}
+
+function clearSearch(){
+  document.getElementById('search-input').value='';
+  searchQuery='';
+  document.getElementById('search-clear').classList.remove('visible');
+  document.getElementById('search-hint').textContent='';
+  document.getElementById('tab-search').style.display='none';
+  showOverviewByName(currentOverview);
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelector(`.tab-btn[onclick*="${currentOverview}"]`).classList.add('active');
+}
+
+function renderSearch(){
+  const pool=A.filter(a=>{
+    const q=searchQuery;
+    return a.title.toLowerCase().includes(q)||
+      a.ministry.toLowerCase().includes(q)||
+      a.parties.some(p=>p.toLowerCase()===q||p.toLowerCase().includes(q))||
+      String(a.year).includes(q)||
+      STATUS_LABEL[a.status].toLowerCase().includes(q);
+  });
+  const heading=document.getElementById('search-heading');
+  const results=document.getElementById('search-results');
+  document.getElementById('search-hint').textContent=`${pool.length} resultat${pool.length!==1?'er':''}`;
+  heading.textContent=`${pool.length} resultat${pool.length!==1?'er':''} for "${document.getElementById('search-input').value}"`;
+  results.innerHTML='';
+  if(pool.length===0){
+    results.innerHTML=`<div class="no-results"><strong>Ingen resultater</strong>Prøv et andet søgeord – fx et ministerium, parti eller årstal.</div>`;
+    return;
+  }
+  // Group by ministry
+  const byMin={};
+  pool.forEach(a=>{if(!byMin[a.ministry])byMin[a.ministry]=[];byMin[a.ministry].push(a);});
+  let idx=0;
+  ministryOrder.forEach(m=>{
+    if(!byMin[m])return;
+    const label=document.createElement('div');
+    label.className='search-result-ministry';
+    label.textContent=`${m} (${byMin[m].length})`;
+    results.appendChild(label);
+    byMin[m].forEach(a=>{results.appendChild(buildRow(a,null,idx++));});
+  });
+}
+
+function setGlobalFilter(status, el){
+  globalStatusFilter=status;
+  document.querySelectorAll('#global-status-filters .sf-chip').forEach(c=>{
+    c.classList.toggle('inactive', c.dataset.status!==status);
+  });
+  if(currentOverview==='ministerier') buildMinistryOverview();
+  else if(currentOverview==='partier') buildPartyOverview();
+}
+
+// ── NAV ───────────────────────────────────────────────────
+function setGlobalFilterVisibility(visible){
+  document.getElementById('global-status-filters').style.display = visible ? '' : 'none';
+  const of = document.getElementById('omraade-filters');
+  if(of) of.style.display = visible ? '' : 'none';
+  const exp = document.getElementById('overview-explainer-box');
+  if(exp){
+    const showExp = visible && (currentOverview==='ministerier' || currentOverview==='partier');
+    exp.style.display = showExp ? '' : 'none';
+  }
+  const exportBtn = document.querySelector('.export-btn');
+  if(exportBtn) exportBtn.style.display = visible ? '' : 'none';
+  const exportBtnJ = document.querySelector('.export-btn-json');
+  if(exportBtnJ) exportBtnJ.style.display = visible ? '' : 'none';
+}
+function showPanel(name,bcCtx,bcCur){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  const bc=document.getElementById('breadcrumb');
+  bc.classList.add('visible');
+  document.getElementById('bc-link').textContent=`← ${bcCtx}`;
+  document.getElementById('bc-current').textContent=bcCur;
+  setGlobalFilterVisibility(false);
+  window.scrollTo({top:0,behavior:'smooth'});
+  triggerBars();
+}
+function goBack(){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+currentOverview).classList.add('active');
+  document.getElementById('breadcrumb').classList.remove('visible');
+  setGlobalFilterVisibility(true);
+  triggerBars();
+}
+function showOverviewByName(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  document.getElementById('breadcrumb').classList.remove('visible');
+  setGlobalFilterVisibility(id!=='historik');
+}
+function showOverview(id,btn){
+  currentOverview=id;
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  showOverviewByName(id);
+  if(id==='ministerier') buildMinistryOverview();
+  else if(id==='partier') buildPartyOverview();
+  else if(id==='historik') { setGlobalFilterVisibility(false); buildHistorik(); }
+  else if(id==='aktualitet') { setGlobalFilterVisibility(false); buildAktualitet(); }
+  else if(id==='search') renderSearch();
+  else reAnimate();
+}
+function triggerBars(){setTimeout(()=>{document.querySelectorAll('[data-w]').forEach(el=>{el.style.width=el.dataset.w;});},100);}
+function reAnimate(){
+  document.querySelectorAll('.ministry-row,.party-card').forEach(el=>{el.style.animation='none';void el.offsetHeight;el.style.animation='';});
+  document.querySelectorAll('[data-w]').forEach(el=>{el.style.width='0';});
+  setTimeout(triggerBars,120);
+}
+
+function showOverviewByName(id){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  const panel = document.getElementById('panel-'+id);
+  if(panel) panel.classList.add('active');
+  document.getElementById('breadcrumb').classList.remove('visible');
+  const isOverview = ['ministerier','partier','omraade'].includes(id);
+  setGlobalFilterVisibility(isOverview);
+}
+function showOverview(id,btn){
+  currentOverview=id;
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  showOverviewByName(id);
+  if(id==='ministerier') buildMinistryOverview();
+  else if(id==='partier') buildPartyOverview();
+  else if(id==='omraade') buildOmraadeOverview();
+  else if(id==='historik') { setGlobalFilterVisibility(false); buildHistorik(); }
+  else if(id==='aktualitet') { setGlobalFilterVisibility(false); buildAktualitet(); }
+  else if(id==='search') renderSearch();
+  else reAnimate();
+}
+function triggerBars(){setTimeout(()=>{document.querySelectorAll('[data-w]').forEach(el=>{el.style.width=el.dataset.w;});},100);}
+function reAnimate(){
+  document.querySelectorAll('.ministry-row,.party-card').forEach(el=>{el.style.animation='none';void el.offsetHeight;el.style.animation='';});
+  document.querySelectorAll('[data-w]').forEach(el=>{el.style.width='0';});
+  setTimeout(triggerBars,120);
+}
+
+// ── MANDATER (Folketing 2022-valg) ────────────────────────
+const MANDATER = { S:50, V:23, M:16, SF:15, K:10, LA:14, DF:10, RV:7, EL:13, ALT:6, DD:14, NB:6 };
+const GOV_PARTIER = new Set(['S','V','M']);
+const MAJORITY = 90;
+
+function calcMandates(parties) {
+  const total = parties.reduce((sum,p)=>sum+(MANDATER[p]||0),0);
+  const govInForlig = parties.filter(p=>GOV_PARTIER.has(p));
+  const govMandates = govInForlig.reduce((s,p)=>s+(MANDATER[p]||0),0);
+  const oppMandates = total - govMandates;
+  // Pivot: smallest party whose removal would break majority
+  const pivots = parties
+    .filter(p=>!GOV_PARTIER.has(p))
+    .filter(p=>(total-(MANDATER[p]||0))<MAJORITY)
+    .map(p=>p);
+  return { total, govMandates, oppMandates, pivots, hasMajority: total>=MAJORITY };
+}
+
+function renderMandates(parties) {
+  const {total, pivots, hasMajority} = calcMandates(parties);
+  const pivotHtml = pivots.map(p=>`<span class="pivot-tag">Pivot: ${p}</span>`).join('');
+  const majCol = hasMajority ? 'var(--s-aktiv)' : 'var(--red)';
+  return `<div class="mandate-wrap">
+    <div class="mandate-item"><span class="mandate-val" style="color:${majCol}">${total}</span><span class="mandate-label">mandater</span></div>
+    <div class="mandate-sep">·</div>
+    <div class="mandate-item"><span class="mandate-label">${hasMajority?'✓ Flertal ('+MAJORITY+' krævet)':'✗ Ikke flertal'}</span></div>
+    ${pivotHtml ? `<div class="mandate-sep">·</div><div class="mandate-item">${pivotHtml}</div>` : ''}
+  </div>`;
+}
+
+// ── FORLIGSRELATIONER (fra noter) ────────────────────────
+function extractRelations(a) {
+  const n = a.notes || '';
+  const rels = [];
+  // Delaftaler
+  if (/delaftale/i.test(a.title)) {
+    const parent = A.find(x=>x.id!==a.id && a.title.toLowerCase().includes(x.title.toLowerCase().substring(0,25)));
+    if(parent) rels.push({ icon:'🔗', text:`Delaftale under: ${parent.title}`, id:parent.id });
+  }
+  // Justeret/videreført af
+  const justeretMatch = n.match(/justeret med[:\s"«»]([^.«»]{10,60})[.«»"]/i);
+  if(justeretMatch) rels.push({ icon:'📝', text:`Justeret med: ${justeretMatch[1].trim()}` });
+  // Afløst af
+  const afloestMatch = n.match(/afløst af ([^.]{10,60})\./i);
+  if(afloestMatch) rels.push({ icon:'→', text:`Afløst af: ${afloestMatch[1].trim()}` });
+  // Opsagt med virkning
+  if (/opsagt med virkning/i.test(n)) rels.push({ icon:'⚠️', text:'Opsagt med virkning fra næste valg' });
+  // Udtrådte parter
+  const udtradtMatch = n.match(/([A-Z]{1,3}(?:, [A-Z]{1,3})*) (?:er|og [A-Z]{1,3} er) udtrådt/i);
+  if(udtradtMatch) rels.push({ icon:'↩', text:`Udtrådt: ${udtradtMatch[1]}` });
+  return rels;
+}
+
+function renderRelations(a) {
+  const rels = extractRelations(a);
+  if(!rels.length) return '';
+  const items = rels.map(r=>`<div class="rel-item"><span class="rel-icon">${r.icon}</span><span>${r.text}</span></div>`).join('');
+  return `<div class="relations-wrap"><div class="relations-title">Relationer & ændringer</div>${items}</div>`;
+}
+
+// ── UPDATED buildRow WITH MANDATES & RELATIONS ────────────
+// (replaces existing buildRow in detail views via applyDetailFilter)
+
+// ── EXPERT TABLE VIEW ─────────────────────────────────────
+let detailViewMode = { md:'cards', pd:'cards', od:'cards' };
+
+function setDetailView(prefix, mode, btn) {
+  detailViewMode[prefix] = mode;
+  btn.parentElement.querySelectorAll('.vt-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const pool = currentDetailData[prefix] || [];
+  const hlParty = prefix==='pd' ? currentDetailData.pdParty : null;
+  if(mode==='table') renderExpertTable(prefix+'-list', pool);
+  else {
+    if(prefix==='pd') applyPartyDetailFilter(prefix+'-list', pool, hlParty, detailStatusFilter[prefix]);
+    else applyDetailFilter(prefix+'-list', pool, detailStatusFilter[prefix]);
+  }
+}
+
+function renderExpertTable(listId, pool) {
+  const el = document.getElementById(listId);
+  el.innerHTML = '';
+  const wrap = document.createElement('div');
+  wrap.className = 'expert-table-wrap';
+  const rows = pool.map(a=>{
+    const om = getOmraade(a.ministry);
+    const br = getBreadth(a.parties);
+    const {total} = calcMandates(a.parties);
+    return `<tr>
+      <td><div class="et-title">${a.title}</div></td>
+      <td><span class="et-expires">${a.year}</span></td>
+      <td>${badge(a.status)}</td>
+      <td><span class="omrade-tag ${om.cls}">${om.label}</span></td>
+      <td><span class="breadth-badge ${br.cls}">${a.parties.length} parter</span></td>
+      <td><span class="et-expires">${total} mandater</span></td>
+      <td class="et-expires">${a.expires}</td>
+    </tr>`;
+  }).join('');
+  wrap.innerHTML = `<table class="expert-table">
+    <thead><tr>
+      <th>Aftale</th><th>År</th><th>Status</th><th>Område</th><th>Bredde</th><th>Mandater</th><th>Udløber</th>
+    </tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+  el.appendChild(wrap);
+}
+
+// ── UPDATED applyDetailFilter WITH MANDATES+RELATIONS ─────
+function applyDetailFilter(listId, pool, filterStatus) {
+  const el=document.getElementById(listId);
+  el.innerHTML='';
+  const filtered=filterStatus==='alle'?pool:pool.filter(a=>a.status===filterStatus);
+  filtered.forEach((a,i)=>{
+    const row = buildRow(a,null,i);
+    // Append mandates + relations below the chips
+    const extra = document.createElement('div');
+    extra.innerHTML = renderMandates(a.parties) + renderRelations(a);
+    row.appendChild(extra);
+    el.appendChild(row);
+  });
+}
+
+function applyPartyDetailFilter(listId, pool, hlParty, filterStatus) {
+  const el=document.getElementById(listId);
+  el.innerHTML='';
+  const filtered=filterStatus==='alle'?pool:pool.filter(a=>a.status===filterStatus);
+  filtered.forEach((a,i)=>{
+    const row = buildRow(a,hlParty,i);
+    const extra = document.createElement('div');
+    extra.innerHTML = renderMandates(a.parties) + renderRelations(a);
+    row.appendChild(extra);
+    el.appendChild(row);
+  });
+}
+
+// ── PR. POLITIKOMRÅDE ─────────────────────────────────────
+function buildOmraadeOverview() {
+  const counts = {};
+  A.forEach(a=>{
+    const key = getOmraade(a.ministry).label;
+    if(!counts[key]) counts[key]={ label:key, cls:getOmraade(a.ministry).cls, total:0, aktiv:0, udlober:0, opsagt:0 };
+    counts[key].total++;
+    counts[key][a.status]=(counts[key][a.status]||0)+1;
+  });
+  const sorted = Object.values(counts).sort((a,b)=>b.total-a.total);
+  const maxCount = sorted[0].total;
+  const grid = document.getElementById('omraade-grid');
+  grid.innerHTML = '';
+  sorted.forEach((o,i)=>{
+    const card = document.createElement('div');
+    card.className='omraade-card';
+    card.style.animationDelay=(i*25)+'ms';
+    card.style.animation='fadeUp .3s forwards';
+    card.style.opacity='0';
+    card.innerHTML=`
+      <div class="oc-label">${o.label}</div>
+      <div class="oc-count">${o.total}</div>
+      <div class="oc-sub">${o.aktiv||0} aktive · ${(o.udlober||0)+(o.udloebet||0)} udløber · ${o.opsagt||0} opsagte</div>
+      <div class="oc-bar"><div class="oc-bar-fill" data-w="${(o.total/maxCount*100).toFixed(1)}%"></div></div>`;
+    card.onclick=()=>openOmraadeDetail(o.label);
+    grid.appendChild(card);
+  });
+  triggerBars();
+}
+
+function openOmraadeDetail(label) {
+  const pool = A.filter(a=>getOmraade(a.ministry).label===label).sort((a,b)=>a.year-b.year);
+  currentDetailData.od = pool;
+  detailStatusFilter.od = 'alle';
+  detailViewMode.od = 'cards';
+  document.getElementById('od-title').textContent = label;
+  document.getElementById('od-sub').textContent = `${pool.length} forlig på tværs af ${[...new Set(pool.map(a=>a.ministry))].length} ministerier`;
+  document.getElementById('od-badge').innerHTML = `${pool.length}<small>forlig</small>`;
+  buildDetailStatusFilter('od-status-row', pool, 'od', (s)=>applyDetailFilter('od-list', pool, s));
+  applyDetailFilter('od-list', pool, 'alle');
+  showPanel('omraade-detail', 'Politikområder', label);
+}
+
+// ── HOTSPOTS i aktualitet ─────────────────────────────────
+function buildHotspots() {
+  // Score each agreement: higher = more politically acute
+  function score(a) {
+    let s = 0;
+    if(a.status==='opsagt') s += 40;
+    if(a.status==='udlober') s += 30;
+    if(a.status==='udloebet') s += 20;
+    if(a.parties.length >= 9) s += 15;
+    if(a.parties.length <= 4) s += 10;
+    const n = (a.notes||'').toLowerCase();
+    if(/genforhand|opsige|revidere|varslet/i.test(n)) s += 25;
+    if(/udtrådt|udtræder/i.test(n)) s += 15;
+    if(/næste (valg|folketing)/i.test(n)) s += 20;
+    if(/2025|2026/.test(a.expires||'')) s += 15;
+    return s;
+  }
+  return A.filter(a=>score(a)>20).sort((a,b)=>score(b)-score(a)).slice(0,5);
+}
+
+function buildHotspotHtml(hotspots) {
+  if(!hotspots.length) return '';
+  const cards = hotspots.map((a,i)=>{
+    const om = getOmraade(a.ministry);
+    const {total, hasMajority} = calcMandates(a.parties);
+    const reasons = [];
+    if(a.status==='opsagt') reasons.push('Opsagt eller varslet opsagt');
+    if(a.status==='udlober'||a.status==='udloebet') reasons.push(`Udløber ${a.expires}`);
+    if(/udtrådt|udtræder/i.test(a.notes||'')) reasons.push('Parter er udtrådt');
+    if(/næste (valg|folketing)/i.test(a.notes||'')) reasons.push('Virkning fra næste valg');
+    if(a.parties.length>=9) reasons.push(`Bredt forankret – ${a.parties.length} parter`);
+    return `<div class="hotspot-card">
+      <div class="hc-rank">🔥 Hotspot ${i+1}</div>
+      <div class="hc-title">${a.title}</div>
+      <div class="hc-meta">
+        <span class="omrade-tag ${om.cls}">${om.label}</span>
+        ${badge(a.status)}
+        <span class="breadth-badge ${a.parties.length>=8?'breadth-bred':a.parties.length>=5?'breadth-middel':'breadth-smal'}">${a.parties.length} parter · ${total} mandater</span>
+      </div>
+      <div class="hc-reason">${reasons.join(' · ')}</div>
+    </div>`;
+  }).join('');
+  return `<div style="margin-bottom:28px;">
+    <div class="ak-section-hd" style="margin-bottom:12px;">
+      <span class="ak-section-title">🔥 Top ${hotspots.length} politiske hotspots lige nu</span>
+    </div>
+    <div style="font-size:11.5px;color:var(--slate);margin-bottom:14px;">Automatisk rangeret efter politisk aktualitet – opsigelser, nærtstående udløb og usædvanlige partikonstellationer.</div>
+    <div class="hotspot-grid">${cards}</div>
+    <div class="ak-divider"></div>
+  </div>`;
+}
+
+// ── HISTORISK UDVIKLING ───────────────────────────────────
+const HISTORIK = [
+  { label:"Mar\n2014", year:2014, count:70, confirmed:false,
+    gov:"Thorning-Schmidt II (S-R-SF)",
+    fiu:"FIU 205 (2013-14)", dato:"1. marts 2014",
+    url:"https://www.ft.dk/samling/20131/almdel/fiu/spm/205/svar/1122500/index.htm",
+    note:"Estimeret ud fra dokumentets indhold" },
+  { label:"Feb\n2016", year:2016, count:85, confirmed:false,
+    gov:"Løkke I (V)",
+    fiu:"FIU 146 (2015-16)", dato:"1. februar 2016",
+    url:"https://www.ft.dk/samling/20151/almdel/fiu/spm/146/index.htm",
+    note:"Estimeret" },
+  { label:"Dec\n2016", year:2016.9, count:90, confirmed:false,
+    gov:"Løkke II (V, LA, K)",
+    fiu:"FIU 183 (2016-17)", dato:"1. december 2016",
+    url:"https://www.ft.dk/samling/20161/almdel/fiu/spm/183/index.htm",
+    note:"Estimeret" },
+  { label:"Aug\n2018", year:2018.6, count:119, confirmed:true,
+    gov:"Løkke II (V, LA, K)",
+    fiu:"FIU 466 (2017-18)", dato:"1. august 2018",
+    url:"https://www.ft.dk/samling/20171/almdel/fiu/spm/466/svar/1574252/index.htm",
+    note:"Bekræftet – citeret af finansminister Kristian Jensen (V) og i Solidaritet-artikel 2019" },
+  { label:"Feb\n2021", year:2021.1, count:115, confirmed:true,
+    gov:"Frederiksen I (S)",
+    fiu:"FIU 242 (2020-21)", dato:"1. februar 2021",
+    url:"https://www.ft.dk/samling/20201/almdel/fiu/spm/242/svar/1806730/2441995/index.htm",
+    note:"Bekræftet – FIU-svar og Lex.dk: 'I 2021 optalte Finansministeriet 115 gældende forlig'" },
+  { label:"Jan\n2023", year:2023.05, count:95, confirmed:false,
+    gov:"SVM (S, V, M)",
+    fiu:"FIU 19 (2022-23, 2. saml.)", dato:"Januar 2023",
+    url:"https://www.ft.dk/samling/20222/almdel/fiu/spm/19/index.htm",
+    note:"Estimeret – første opgørelse efter valg nov. 2022 og SVM-regeringsdannelse" },
+  { label:"Okt\n2023", year:2023.75, count:100, confirmed:false,
+    gov:"SVM (S, V, M)",
+    fiu:"FIU 40 (2023-24)", dato:"1. oktober 2023",
+    url:"https://www.ft.dk/samling/20231/almdel/fiu/spm/40/svar/2009978/index.htm",
+    note:"Estimeret ud fra dokumentets omfang og sammenligning med 2021- og 2025-opgørelserne" },
+  { label:"Okt\n2025", year:2025.75, count:107, confirmed:true,
+    gov:"SVM (S, V, M)",
+    fiu:"FIU 2 (2025-26)", dato:"1. oktober 2025",
+    url:"https://www.ft.dk/samling/20251/almdel/fiu/spm/2/svar/index.htm",
+    note:"Bekræftet – kildedokumentet for dette dashboard" },
+];
+
+const ELECTIONS = [
+  { year:2015.5, label:"Valg 2015\nLøkke I" },
+  { year:2019.5, label:"Valg 2019\nFrederiksen I" },
+  { year:2022.85, label:"Valg 2022\nSVM" },
+];
+
+function buildHistorik() {
+  buildHistorikChart();
+  buildHistorikTable();
+}
+
+function buildHistorikChart() {
+  const wrap = document.getElementById('historik-chart-wrap');
+
+  // Fixed viewBox – responsive via CSS width:100%
+  const VW = 900, VH = 290;
+  const mL = 58, mR = 28, mT = 40, mB = 62;
+  const plotW = VW - mL - mR;
+  const plotH = VH - mT - mB;
+  const n = HISTORIK.length;           // 8 bars
+  const slotW = plotW / n;
+  const barW = Math.round(slotW * 0.42);
+
+  const maxCount = 130;
+
+  // Coordinate helpers
+  function xBar(i) { return mL + slotW * i + slotW / 2; }
+  function yp(v)   { return mT + plotH - (v / maxCount) * plotH; }
+
+  // ── Y-axis gridlines & labels ──────────────────────────
+  const yTicks = [0, 25, 50, 75, 100, 125];
+  const keyVals = new Set([107, 115, 119]);
+  let grid = '';
+
+  yTicks.forEach(v => {
+    const y = yp(v);
+    grid += `<line x1="${mL}" y1="${y}" x2="${VW-mR}" y2="${y}"
+      stroke="var(--border)" stroke-width="0.8" stroke-dasharray="3 3"/>`;
+    grid += `<text x="${mL-8}" y="${y+4}" text-anchor="end"
+      font-size="11" class="h-axis-label">${v}</text>`;
+  });
+
+  // (Annoterede referenceliner fjernet efter brugeranmodning)
+
+  // ── Election / government change markers ───────────────
+  // Map each election year to a position between two bars
+  const electionBetween = [
+    { between:[0,1], label:'Valg 2015', gov:'→ Løkke I' },
+    { between:[3,4], label:'Valg 2019', gov:'→ Frederiksen I' },
+    { between:[4,5], label:'Valg 2022', gov:'→ SVM' },
+  ];
+  let events = '';
+  electionBetween.forEach(e => {
+    const x = (xBar(e.between[0]) + xBar(e.between[1])) / 2;
+    events += `<line x1="${x}" y1="${mT}" x2="${x}" y2="${mT+plotH}"
+      stroke="var(--border-dark)" stroke-width="1.2" stroke-dasharray="5 3"/>`;
+    // Label above the plot area
+    events += `<text x="${x}" y="${mT-8}" text-anchor="middle"
+      font-size="9" class="h-axis-label" font-weight="600">${e.label}</text>`;
+    events += `<text x="${x}" y="${mT-20}" text-anchor="middle"
+      font-size="8.5" class="h-axis-label" fill="var(--slate-light)">${e.gov}</text>`;
+  });
+
+  // ── Connecting line (drawn before bars so bars sit on top) ─
+  let linePath = '';
+  HISTORIK.forEach((d,i) => {
+    const x = xBar(i), y = yp(d.count);
+    linePath += i === 0 ? `M${x},${y}` : `L${x},${y}`;
+  });
+
+  // ── Bars, dots and labels ──────────────────────────────
+  let bars = '';
+  HISTORIK.forEach((d, i) => {
+    const x    = xBar(i);
+    const yTop = yp(d.count);
+    const yBot = yp(0);
+    const dotCol = d.confirmed ? 'var(--red)'          : '#94a3b8';
+    const barFill= d.confirmed ? '#fde8e6'              : 'var(--bg3)';
+    const barStroke= d.confirmed ? 'var(--red-mid)'    : 'var(--border)';
+    const valCol = d.confirmed ? 'var(--red)'          : 'var(--slate)';
+    const valTxt = `${d.count}${d.confirmed ? '' : '*'}`;
+
+    // Bar
+    bars += `<rect x="${x - barW/2}" y="${yTop}" width="${barW}"
+      height="${yBot - yTop}" fill="${barFill}"
+      stroke="${barStroke}" stroke-width="1" rx="3"/>`;
+
+    // Dot on top of bar
+    bars += `<circle cx="${x}" cy="${yTop}" r="5"
+      fill="${dotCol}" stroke="white" stroke-width="1.5"/>`;
+
+    // Value label – white bg box so it never overlaps the line
+    const vbW = 32, vbH = 17;
+    bars += `<rect x="${x - vbW/2}" y="${yTop - vbH - 7}"
+      width="${vbW}" height="${vbH}" fill="white" rx="3"
+      stroke="${barStroke}" stroke-width="0.8"/>`;
+    bars += `<text x="${x}" y="${yTop - 12}" text-anchor="middle"
+      font-size="11" font-weight="600" class="h-val-label"
+      fill="${valCol}">${valTxt}</text>`;
+
+    // X-axis: two-line label – enough margin below
+    const [mon, yr] = d.label.split('\n');
+    bars += `<text x="${x}" y="${mT + plotH + 18}" text-anchor="middle"
+      font-size="10" class="h-axis-label" font-weight="500">${mon}</text>`;
+    bars += `<text x="${x}" y="${mT + plotH + 32}" text-anchor="middle"
+      font-size="10" class="h-axis-label">${yr}</text>`;
+  });
+
+  // ── Y-axis title ───────────────────────────────────────
+  const yTitle = `<text x="${mL-44}" y="${mT + plotH/2}"
+    text-anchor="middle" font-size="10" class="h-axis-label"
+    transform="rotate(-90 ${mL-44} ${mT + plotH/2})">Antal forlig</text>`;
+
+  wrap.innerHTML = `
+    <svg class="historik-chart-svg" viewBox="0 0 ${VW} ${VH}"
+      xmlns="http://www.w3.org/2000/svg" style="max-width:100%;display:block;">
+      ${grid}
+      ${events}
+      <path d="${linePath}" fill="none" stroke="var(--border-dark)"
+        stroke-width="1.5" stroke-dasharray="4 3"/>
+      ${bars}
+      ${yTitle}
+    </svg>
+    <div style="display:flex;gap:20px;margin-top:10px;padding-left:${mL}px;">
+      <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--slate);">
+        <svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="var(--red)" stroke="white" stroke-width="1.5"/></svg>
+        Bekræftet tal
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--slate);">
+        <svg width="12" height="12"><circle cx="6" cy="6" r="5" fill="#94a3b8" stroke="white" stroke-width="1.5"/></svg>
+        Estimeret tal (*)
+      </div>
+    </div>`;
+}
+
+function buildHistorikTable() {
+  const wrap = document.getElementById('historik-table');
+  const rows = HISTORIK.slice().reverse().map(d => `
+    <tr>
+      <td>${d.dato}</td>
+      <td class="h-count-cell">${d.count}${d.confirmed?'':' *'}</td>
+      <td><span class="h-conf-badge ${d.confirmed?'yes':'est'}">${d.confirmed?'Bekræftet':'Estimeret'}</span></td>
+      <td><div class="h-gov-tag">${d.gov}</div></td>
+      <td><a class="h-source-link" href="${d.url}" target="_blank" rel="noopener">${d.fiu} ↗</a></td>
+      <td style="font-size:11px;color:var(--slate);max-width:220px">${d.note}</td>
+    </tr>`).join('');
+
+  wrap.innerHTML = `<div class="historik-table-wrap"><table class="historik-table-el">
+    <thead><tr>
+      <th>Dato for opgørelse</th>
+      <th>Antal forlig</th>
+      <th>Kildestatus</th>
+      <th>Regering</th>
+      <th>FIU-kilde</th>
+      <th>Bemærkning</th>
+    </tr></thead>
+    <tbody>${rows}</tbody>
+  </table></div>`;
+}
+
+// ── RELATIONS MAP ─────────────────────────────────────────
+// Each entry: id → array of { type, targetId, label }
+// Types: 'justerer' | 'erstatter' | 'delaftale' | 'relateret' | 'viderefoerer'
+const RELATIONS = {
+  3:  [{ type:'relateret',    targetId:2,   label:'Aftale om budgetlov' }],
+  9:  [{ type:'erstatter',    targetId:null, label:'Nyt forlig varslet fra næste valg' }],
+  21: [{ type:'justerer',     targetId:20,  label:'Ejendomsvurderingssystem 2016' }],
+  22: [{ type:'relateret',    targetId:2,   label:'Aftale om budgetlov' }],
+  26: [{ type:'viderefoerer', targetId:null, label:'Videreført via FL 2024 og FL 2025' }],
+  27: [{ type:'relateret',    targetId:26,  label:'Politiets økonomi 2021–23' }],
+  29: [{ type:'delaftale',    targetId:30,  label:'Første delaftale 2024' },
+       { type:'delaftale',    targetId:31,  label:'Anden delaftale 2024' },
+       { type:'delaftale',    targetId:32,  label:'Værnepligtsaftale 2025' }],
+  30: [{ type:'relateret',    targetId:29,  label:'Forsvarsforlig 2024–2033' }],
+  31: [{ type:'relateret',    targetId:29,  label:'Forsvarsforlig 2024–2033' }],
+  32: [{ type:'relateret',    targetId:29,  label:'Forsvarsforlig 2024–2033' }],
+  37: [{ type:'relateret',    targetId:33,  label:'Kommunal inddeling 2005' }],
+  40: [{ type:'relateret',    targetId:41,  label:'Sygedagpengereform 2013' }],
+  41: [{ type:'justerer',     targetId:40,  label:'Førtidspension og fleksjob 2012' }],
+  44: [{ type:'opsagt',       targetId:null, label:'Varslet opsagt efter næste valg (SVM jan. 2024)' }],
+  47: [{ type:'justerer',     targetId:39,  label:'RUT-registret 2009' },
+       { type:'justerer',     targetId:41,  label:'Sygedagpengereform 2013' }],
+  51: [{ type:'erstatter',    targetId:null, label:'Opsagt – ny SU-reform undervejs' }],
+  54: [{ type:'relateret',    targetId:55,  label:'Professionsuddannelsesreform 2025' }],
+  55: [{ type:'relateret',    targetId:54,  label:'Universitetsreform 2023' }],
+  56: [{ type:'erstatter',    targetId:59,  label:'Nyt gymnasieforlig 2025 opsiger dette' }],
+  58: [{ type:'erstatter',    targetId:59,  label:'Nyt gymnasieforlig 2025 opsiger dette' }],
+  59: [{ type:'justerer',     targetId:56,  label:'10. klasse-forlig 2006' },
+       { type:'justerer',     targetId:58,  label:'Gymnasieforlig 2016' }],
+  63: [{ type:'relateret',    targetId:65,  label:'Kongelige Teater 2025–28' }],
+  65: [{ type:'relateret',    targetId:63,  label:'Medieaftale 2023–26' }],
+  70: [{ type:'erstatter',    targetId:71,  label:'Opsiges – Grønt Danmark 2024 overtager' }],
+  71: [{ type:'justerer',     targetId:70,  label:'Grøn omstilling af landbrug 2021' }],
+  78: [{ type:'relateret',    targetId:79,  label:'Indkøb af eltog 2018' }],
+  79: [{ type:'relateret',    targetId:78,  label:'Genudbud togtrafikken 2017' }],
+  81: [{ type:'relateret',    targetId:82,  label:'Infrastrukturplan Veje 2035' }],
+  82: [{ type:'relateret',    targetId:81,  label:'Infrastrukturplan 2035' }],
+  83: [{ type:'viderefoerer', targetId:84,  label:'Elreformen 1999' }],
+  84: [{ type:'viderefoerer', targetId:85,  label:'Reformopfølgning 2000' }],
+  85: [{ type:'relateret',    targetId:83,  label:'Biomasseudbygning 1993' }],
+  87: [{ type:'relateret',    targetId:88,  label:'Kompensationsordning Nordsøen 2003' }],
+  88: [{ type:'relateret',    targetId:87,  label:'Kulbrinteskattelov Nordsøen 2003' }],
+  93: [{ type:'viderefoerer', targetId:95,  label:'Ny vandsektorregulering 2015' }],
+  95: [{ type:'justerer',     targetId:93,  label:'Vandsektorforlig 2007' }],
+  96: [{ type:'justerer',     targetId:84,  label:'Elreformen 1999' }],
+  97: [{ type:'relateret',    targetId:96,  label:'Energiaftale 2018' },
+       { type:'relateret',    targetId:98,  label:'Klimaaftale energi & industri 2020' }],
+  98: [{ type:'relateret',    targetId:97,  label:'Klimalov 2019' }],
+  99: [{ type:'relateret',    targetId:104, label:'Opfølgende aftale kap. III 2022' }],
+  101:[{ type:'justerer',     targetId:96,  label:'Energiaftale 2018' }],
+  103:[{ type:'relateret',    targetId:98,  label:'Klimaaftale energi & industri 2020' }],
+  104:[{ type:'relateret',    targetId:99,  label:'Klimaplan affaldssektor kap. IV og V' }],
+  105:[{ type:'justerer',     targetId:101, label:'Klimaaftale grøn strøm og varme 2022' }],
+  106:[{ type:'justerer',     targetId:101, label:'Klimaaftale grøn strøm og varme 2022' }],
+  107:[{ type:'relateret',    targetId:105, label:'Tillægsaftale 6 GW havvind 2023' }],
+};
+
+// ── TIMELINE MAP ──────────────────────────────────────────
+// Each entry: id → array of { year, type, label }
+const TIMELINES = {
+  2:  [{year:2012,type:'indgaaet',label:'Indgået'},{year:2022,type:'justeret',label:'Revideret (sikkerhedskompromis)'},{year:2033,type:'justeret',label:'Politiske drøftelser'}],
+  9:  [{year:2010,type:'indgaaet',label:'Indgået'},{year:2014,type:'justeret',label:'Justeret'},{year:2017,type:'justeret',label:'Justeret'},{year:2018,type:'justeret',label:'Justeret'},{year:2025,type:'opsagt',label:'Opsagt (næste valg)'}],
+  21: [{year:2017,type:'indgaaet',label:'Indgået'},{year:2020,type:'justeret',label:'Kompensationsaftale'},{year:2023,type:'justeret',label:'Erhvervsvurderinger'}],
+  26: [{year:2020,type:'indgaaet',label:'Indgået'},{year:2024,type:'justeret',label:'Videreført FL 2024'},{year:2025,type:'justeret',label:'Videreført FL 2025'},{year:2025,type:'udloeber',label:'Udløber'}],
+  29: [{year:2023,type:'indgaaet',label:'Indgået'},{year:2024,type:'justeret',label:'1. delaftale'},{year:2024,type:'justeret',label:'2. delaftale'},{year:2025,type:'justeret',label:'Værnepligtsaftale'},{year:2033,type:'udloeber',label:'Udløber'}],
+  41: [{year:2013,type:'indgaaet',label:'Indgået'},{year:2017,type:'opsagt',label:'Driftsrefusion opsagt'},{year:2024,type:'justeret',label:'Målretning & forenkling'},{year:2025,type:'justeret',label:'Beskæftigelsesreform'}],
+  44: [{year:2018,type:'indgaaet',label:'Indgået'},{year:2024,type:'opsagt',label:'Opsigelse varslet (næste valg)'}],
+  51: [{year:2013,type:'indgaaet',label:'Indgået'},{year:2024,type:'opsagt',label:'Opsagt – ny SU-reform'}],
+  56: [{year:2006,type:'indgaaet',label:'Indgået'},{year:2025,type:'opsagt',label:'Opsagt (næste valg)'}],
+  58: [{year:2016,type:'indgaaet',label:'Indgået'},{year:2025,type:'opsagt',label:'Opsagt (næste valg)'}],
+  59: [{year:2025,type:'indgaaet',label:'Indgået – nyt gymnasieforlig'}],
+  70: [{year:2021,type:'indgaaet',label:'Indgået'},{year:2024,type:'opsagt',label:'Opsiges ved næste valg'}],
+  71: [{year:2024,type:'indgaaet',label:'Indgået'},{year:2026,type:'justeret',label:'Genbesøg kvælstof'},{year:2027,type:'justeret',label:'Genbesøg CO₂-mål'},{year:2030,type:'udloeber',label:'Udløber'}],
+  96: [{year:2018,type:'indgaaet',label:'Indgået'},{year:2024,type:'udloeber',label:'Forligsbindinger udløbet'}],
+  101:[{year:2022,type:'indgaaet',label:'Indgået'},{year:2024,type:'udloeber',label:'Grøn strøm udløbet'},{year:2028,type:'udloeber',label:'Grøn varme udløber'}],
+  105:[{year:2023,type:'indgaaet',label:'Indgået'},{year:2024,type:'opsagt',label:'6 GW-del opsagt'},{year:2030,type:'udloeber',label:'Energiø Bornholm udløber'}],
+};
+
+// ── OMRAADE FILTER ────────────────────────────────────────
+let activeOmraade = null;
+
+function buildOmraadeFilter() {
+  const wrap = document.getElementById('omraade-filters');
+  if (!wrap) return;
+  // Collect unique omraade labels in order
+  const seen = new Map();
+  A.forEach(a => {
+    const om = getOmraade(a.ministry);
+    if (!seen.has(om.label)) seen.set(om.label, om);
+  });
+  // Remove old chips (keep label)
+  const label = wrap.querySelector('.sf-label');
+  wrap.innerHTML = '';
+  wrap.appendChild(label);
+
+  // "Alle" chip
+  const allChip = document.createElement('span');
+  allChip.className = 'of-chip';
+  allChip.style.cssText = 'background:var(--navy);border-color:var(--navy);color:#fff;';
+  allChip.textContent = 'Alle';
+  allChip.onclick = () => setOmraadeFilter(null);
+  wrap.appendChild(allChip);
+
+  seen.forEach((om, label) => {
+    const chip = document.createElement('span');
+    chip.className = `of-chip ${om.cls}`;
+    chip.textContent = label;
+    chip.onclick = () => setOmraadeFilter(label);
+    wrap.appendChild(chip);
+  });
+  refreshOmraadeChips();
+}
+
+function setOmraadeFilter(label) {
+  activeOmraade = label;
+  refreshOmraadeChips();
+  if (currentOverview === 'ministerier') buildMinistryOverview();
+  else if (currentOverview === 'partier') buildPartyOverview();
+}
+
+function refreshOmraadeChips() {
+  const chips = document.querySelectorAll('#omraade-filters .of-chip');
+  chips.forEach(c => {
+    const isAll = c.textContent === 'Alle';
+    const isActive = activeOmraade === null ? isAll : c.textContent === activeOmraade;
+    c.classList.toggle('inactive', !isActive);
+  });
+}
+
+function getFilteredPool() {
+  let pool = globalStatusFilter === 'alle' ? A : A.filter(a => a.status === globalStatusFilter);
+  if (activeOmraade) pool = pool.filter(a => getOmraade(a.ministry).label === activeOmraade);
+  return pool;
+}
+
+// ── JSON EXPORT ───────────────────────────────────────────
+function exportJSON() {
+  const pool = getFilteredPool();
+  const data = pool.map(a => ({
+    id: a.id,
+    titel: a.title,
+    aar: a.year,
+    ministerium: a.ministry,
+    politikomraade: getOmraade(a.ministry).label,
+    forligskreds: a.parties,
+    antalParter: a.parties.length,
+    udloebsaar: a.expires,
+    status: a.status,
+    statusLabel: STATUS_LABEL[a.status],
+    bemaerkninger: a.notes,
+    relationer: (RELATIONS[a.id]||[]).map(r=>({type:r.type, relatertId:r.targetId, label:r.label})),
+    tidslinje: (TIMELINES[a.id]||[]),
+  }));
+  const blob = new Blob([JSON.stringify({
+    kilde: 'Finansministeriet · FIU Alm.del – spm. 2 (2025-26)',
+    dato: '1. oktober 2025',
+    antalForlig: data.length,
+    forlig: data
+  }, null, 2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const el = document.createElement('a');
+  el.href = url; el.download = 'politiske-forlig-2025.json';
+  el.click(); URL.revokeObjectURL(url);
+}
+
+// ── INIT ──────────────────────────────────────────────────
+const OMRAADE_MAP = {
+  "Klima-, Energi- og Forsyningsministeriet": { label:"Klima & Energi",   cls:"ok-klima" },
+  "Ministeriet for Grøn Trepart":             { label:"Klima & Landbrug", cls:"ok-klima" },
+  "Finansministeriet":                        { label:"Økonomi & Finans", cls:"ok-oekonomi" },
+  "Skatteministeriet":                        { label:"Skat",             cls:"ok-oekonomi" },
+  "Erhvervsministeriet":                      { label:"Erhverv",          cls:"ok-oekonomi" },
+  "Forsvarsministeriet":                      { label:"Forsvar",          cls:"ok-forsvar" },
+  "Udenrigsministeriet":                      { label:"Udenrigspolitik",  cls:"ok-udenrigs" },
+  "Beskæftigelsesministeriet":                { label:"Arbejdsmarked",    cls:"ok-arbejdsmarked" },
+  "Justitsministeriet":                       { label:"Retsvæsen",        cls:"ok-retsvæsen" },
+  "Uddannelses- og Forskningsministeriet":    { label:"Uddannelse",       cls:"ok-uddannelse" },
+  "Børne- og Undervisningsministeriet":       { label:"Grundskole & Gym", cls:"ok-uddannelse" },
+  "Indenrigs- og Sundhedsministeriet":        { label:"Sundhed & Valg",   cls:"ok-sundhed" },
+  "Kulturministeriet":                        { label:"Kultur & Medier",  cls:"ok-kultur" },
+  "Transportministeriet":                     { label:"Transport",        cls:"ok-transport" },
+  "By-, Land- og Kirkeministeriet":           { label:"By & Land",        cls:"ok-byogland" },
+  "Miljø- og Ligestillingsministeriet":       { label:"Miljø",            cls:"ok-miljoe" },
+  "Digitaliseringsministeriet":               { label:"Digitalisering",   cls:"ok-digital" },
+};
+
+function getOmraade(ministry) {
+  return OMRAADE_MAP[ministry] || { label: ministry, cls: 'ok-udenrigs' };
+}
+
+function getBreadth(parties) {
+  if (parties.length >= 7) return { label:'Bredt forlig',  cls:'breadth-bred' };
+  if (parties.length >= 5) return { label:'Middelbredt',   cls:'breadth-middel' };
+  return                         { label:'Smalt forlig',   cls:'breadth-smal' };
+}
+
+// ── CSV EXPORT ────────────────────────────────────────────
+function exportCSV() {
+  const pool = globalStatusFilter==='alle' ? A : A.filter(a=>a.status===globalStatusFilter);
+  const header = ['ID','Titel','Årstal','Ministerium','Politikområde','Forligskreds','Udløbsår','Status','Bemærkninger'];
+  const rows = pool.map(a => [
+    a.id,
+    `"${a.title.replace(/"/g,'""')}"`,
+    a.year,
+    `"${a.ministry}"`,
+    `"${getOmraade(a.ministry).label}"`,
+    `"${a.parties.join(', ')}"`,
+    `"${a.expires}"`,
+    STATUS_LABEL[a.status],
+    `"${(a.notes||'').replace(/"/g,'""')}"`,
+  ].join(','));
+  const csv = [header.join(','), ...rows].join('\n');
+  const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'politiske-forlig-2025.csv';
+  a.click(); URL.revokeObjectURL(url);
+}
+
+// ── POLITISK AKTUALITET ───────────────────────────────────
+function buildAktualitet() {
+  const udlober12 = A.filter(a=>{
+    if(!a.expires||a.expires==='–') return false;
+    const m=a.expires.match(/\d{4}/); if(!m) return false;
+    return parseInt(m[1])<=2026 && a.status!=='opsagt';
+  });
+  const udlober24 = A.filter(a=>{
+    if(!a.expires||a.expires==='–') return false;
+    const m=a.expires.match(/\d{4}/); if(!m) return false;
+    const yr=parseInt(m[1]);
+    return yr===2027 && a.status!=='opsagt';
+  });
+  const opsagt   = A.filter(a=>a.status==='opsagt');
+  const brede    = A.filter(a=>a.parties.length>=8);
+  const smalle   = A.filter(a=>a.parties.length<=4);
+
+  document.getElementById('ak-summary').innerHTML = `
+    <div class="ak-sum-card">
+      <div class="ak-sum-val" style="color:var(--red)">${udlober12.length}</div>
+      <div class="ak-sum-label">Udløber inden for 12 mdr.</div>
+    </div>
+    <div class="ak-sum-card">
+      <div class="ak-sum-val" style="color:#92400e">${udlober24.length}</div>
+      <div class="ak-sum-label">Udløber om 1–2 år</div>
+    </div>
+    <div class="ak-sum-card">
+      <div class="ak-sum-val" style="color:#7f1d1d">${opsagt.length}</div>
+      <div class="ak-sum-label">Opsagt eller varslet opsagt</div>
+    </div>
+    <div class="ak-sum-card">
+      <div class="ak-sum-val" style="color:var(--navy)">${brede.length}</div>
+      <div class="ak-sum-label">Brede forlig (8+ parter)</div>
+    </div>`;
+
+  const content = document.getElementById('ak-content');
+  content.innerHTML = '';
+
+  function makeSection(title, subtitle, items, expiresClass) {
+    if (items.length===0) return '';
+    const rows = items.map((a,i) => {
+      const om = getOmraade(a.ministry);
+      const br = getBreadth(a.parties);
+      const {total} = calcMandates(a.parties);
+      return `<div class="ak-row" style="animation-delay:${i*18}ms;animation:fadeUp .3s forwards;opacity:0">
+        <div class="ak-row-left">
+          <div class="ak-row-title">${a.title}</div>
+          <div class="ak-row-meta">
+            <span class="omrade-tag ${om.cls}">${om.label}</span>
+            <span class="breadth-badge ${br.cls}">${a.parties.length} parter · ${total} mandater</span>
+            ${badge(a.status)}
+          </div>
+        </div>
+        <div class="ak-row-right">
+          <span class="ak-expires-pill ${expiresClass||''}">${a.expires}</span>
+          <span style="font-size:10px;color:var(--slate);margin-top:3px">${a.ministry.replace('ministeriet','min.').replace('Ministeriet','Min.')}</span>
+        </div>
+      </div>`;
+    }).join('');
+    return `<div class="ak-section">
+      <div class="ak-section-hd">
+        <span class="ak-section-title">${title}</span>
+        <span class="ak-count">${items.length}</span>
+      </div>
+      <div class="ak-section-sub">${subtitle}</div>
+      <div class="ak-list">${rows}</div>
+    </div>`;
+  }
+
+  const hotspotHtml = buildHotspotHtml(buildHotspots());
+
+  content.innerHTML = hotspotHtml + [
+    makeSection('Udløber inden for 12 måneder','Forlig med udløbsår 2025 eller 2026.',udlober12,'red'),
+    udlober12.length&&udlober24.length ? '<div class="ak-divider"></div>' : '',
+    makeSection('Udløber om 1–2 år','Forlig med udløbsår 2027.',udlober24,'amber'),
+    (udlober12.length||udlober24.length)&&opsagt.length ? '<div class="ak-divider"></div>' : '',
+    makeSection('Opsagt eller varslet opsagt','Forlig der er opsagt eller varslet opsagt med virkning fra næste valg.',opsagt,''),
+    opsagt.length ? '<div class="ak-divider"></div>' : '',
+    makeSection('Bredest forankrede forlig','Forlig med 8 eller flere parter.',brede.sort((a,b)=>b.parties.length-a.parties.length),''),
+    '<div class="ak-divider"></div>',
+    makeSection('Smalleste forlig','Forlig med 4 eller færre parter – mest sårbare over for politiske skift.',smalle.sort((a,b)=>a.parties.length-b.parties.length),''),
+  ].filter(Boolean).join('');
+}
+
+// ── INIT ──────────────────────────────────────────────────
+document.querySelectorAll('#global-status-filters .sf-chip').forEach(c=>{
+  if(c.dataset.status!=='alle') c.classList.add('inactive');
+});
+buildMinistryOverview();
+buildPartyOverview();
+buildOmraadeOverview();
+</script>
+</body>
+</html>
